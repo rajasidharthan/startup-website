@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-<title>CleanSense AutoSan</title>
+  <title>CleanSense AutoSan</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- SEO (basic but important) -->
+  <meta name="description" content="CleanSense AutoSan is a smart odor-activated automatic cleaning system for public toilets and train coaches, improving hygiene with minimal human intervention.">
+
   <style>
     body {
       margin: 0;
@@ -12,22 +16,47 @@
       color: #e5e7eb;
       text-align: center;
     }
+
+    /* HEADER / HERO */
     header {
-      padding: 80px 20px;
+      padding: 60px 20px;
       background: linear-gradient(135deg, #2563eb, #1e40af);
     }
+
+    .logo {
+      max-width: 220px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
     h1 {
       font-size: 2.6rem;
       margin-bottom: 10px;
     }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
     p {
       font-size: 1.1rem;
-      max-width: 650px;
+      max-width: 700px;
       margin: auto;
+      line-height: 1.6;
     }
+
+    /* SECTIONS */
     section {
-      padding: 60px 20px;
+      padding: 70px 20px;
+      background: #020617;
     }
+
+    section:nth-of-type(even) {
+      background: #0f172a;
+    }
+
+    /* BUTTON */
     .btn {
       display: inline-block;
       margin-top: 25px;
@@ -38,38 +67,73 @@
       border-radius: 6px;
       font-weight: bold;
     }
+
+    /* FOOTER */
     footer {
       padding: 20px;
       background: #020617;
       font-size: 0.9rem;
     }
+
+    /* WHATSAPP FLOAT BUTTON */
+    .whatsapp-float {
+      position: fixed;
+      width: 55px;
+      height: 55px;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 30px;
+      line-height: 55px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
+      background-color: #1ebe5d;
+    }
   </style>
 </head>
+
 <body>
 
+<!-- HERO -->
 <header>
- <section>
+  <img src="logo.png" alt="CleanSense AutoSan Logo" class="logo">
+
+  <h1>CleanSense AutoSan</h1>
+  <p>Smart odor-activated cleaning for public toilets and trains</p>
+
+  <a class="btn" href="mailto:shreyasrajaelandassery@gmail.com">
+    Contact Us
+  </a>
+</header>
+
+<!-- PROBLEM -->
+<section>
   <h2>The Problem</h2>
   <p>
     Public toilets and train coaches often remain dirty due to delayed manual
-    cleaning. Bad odor spreads quickly, causing health risks, discomfort,
+    cleaning. Foul odor spreads quickly, causing health risks, discomfort,
     and poor hygiene for users.
   </p>
 </section>
 
+<!-- SOLUTION -->
 <section>
   <h2>Our Solution</h2>
   <p>
     CleanSense AutoSan detects foul odor in real time and automatically activates
-    cleaning and sanitization systems. This ensures timely cleaning without
-    human dependency.
+    cleaning and sanitization systems. This ensures timely hygiene maintenance
+    without human dependency.
   </p>
 </section>
-  <h1>CleanSense AutoSan</h1>
-  <p>Smart odor-activated cleaning for public toilets and trains</p>
-  <a class="btn" href="mailto:shreyasrajaelandassery@gmail.com">Contact Us</a>
-</header>
 
+<!-- FEATURES -->
 <section>
   <h2>Key Features</h2>
   <p>
@@ -80,48 +144,23 @@
     • Scalable for large public infrastructure
   </p>
 </section>
-  <p>
-    CleanSense AutoSan is an intelligent hygiene system that detects foul odor
-and automatically activates cleaning mechanisms to maintain cleanliness
-in public toilets and train coaches.
-  </p>
-</section>
 
+<!-- MISSION -->
 <section>
   <h2>Our Mission</h2>
-  <p>To improve public sanitation in India using low-cost, automated,
-and odor-responsive cleaning technology.
+  <p>
+    To improve public sanitation in India using low-cost, automated,
+    and odor-responsive cleaning technology.
   </p>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  © 2026 Sreyas Raja. All rights reserved.
+  © 2026 CleanSense AutoSan. All rights reserved.
 </footer>
-<!-- WhatsApp Floating Button -->
-<a href="https://wa.me/917020758176" class="whatsapp-float" target="_blank">
-  💬
-</a>
 
-<style>
-.whatsapp-float {
-  position: fixed;
-  width: 55px;
-  height: 55px;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
-  color: white;
-  border-radius: 50%;
-  text-align: center;
-  font-size: 30px;
-  line-height: 55px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  z-index: 1000;
-  text-decoration: none;
-}
-.whatsapp-float:hover {
-  background-color: #1ebe5d;
-}
-</style>
+<!-- WHATSAPP BUTTON -->
+<a href="https://wa.me/917020758176" class="whatsapp-float" target="_blank">💬</a>
+
 </body>
 </html>
