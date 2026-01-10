@@ -74,7 +74,7 @@ nav {
   z-index: 1000; display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.nav-logo { height: 75px; width: auto; cursor: pointer; transition: transform 0.3s ease; } /* RESIZED LOGO */
+.nav-logo { height: 75px; width: auto; cursor: pointer; transition: transform 0.3s ease; }
 .nav-links { display: flex; gap: 30px; list-style: none; }
 .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -88,7 +88,7 @@ nav {
   min-width: 100%; min-height: 100%; object-fit: cover; z-index: -1; opacity: 0.2;
 }
 .hero-content { display: flex; flex-direction: column; align-items: center; }
-.hero-page-logo { height: 160px; margin-bottom: 20px; } /* LOGO ON FIRST PAGE */
+.hero-page-logo { height: 160px; margin-bottom: 20px; }
 .hero-content h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 900; margin-bottom: 20px; letter-spacing: -3px; }
 
 /* ========== TECH GRID ========== */
@@ -102,7 +102,7 @@ nav {
   border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
 }
 
-/* ========== INNOVATORS / TEAM CARDS (MOBILE ANIMATION FIXED) ========== */
+/* ========== INNOVATORS / TEAM CARDS ========== */
 .team-grid { 
   display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; 
   padding: 40px 0;
@@ -119,43 +119,42 @@ nav {
 }
 .card .image { 
   width: 100px; height: 100px; border-radius: 50%; border: 6px solid #fff; 
-  z-index: 1; background-size: cover; background-position: center; background-color: #ddd;
+  z-index: 2; background-size: cover; background-position: center; background-color: #ddd;
 }
-.card-info { z-index: 1; margin-top: 15px; }
-.card-info span { font-weight: 800; font-size: 1.3rem; display: block; }
+.card-info { z-index: 2; margin-top: 15px; padding: 0 10px; }
+.card-info span { font-weight: 800; font-size: 1.2rem; display: block; white-space: normal; line-height: 1.3; } 
 .card-info p { font-family: monospace; font-size: 0.8rem; color: #64748b; font-weight: 700; margin-top: 5px; }
 
 .connect-btn {
-  z-index: 1; margin-top: 15px; padding: 8px 25px;
+  z-index: 2; margin-top: 15px; padding: 8px 25px;
   background: var(--dark-bg); color: #fff; text-decoration: none;
   border-radius: 50px; font-weight: 700; font-size: 0.75rem; transition: 0.3s;
 }
 
-/* Scroll Animation Helper Class for Mobile */
+/* Mobile Scroll Animation State */
 .card.anim-active {
     border-radius: 50% !important;
     width: 300px !important;
     height: 300px !important;
 }
 .card.anim-active::before { height: 100% !important; border-radius: 50% !important; transform: scale(0.9) !important; }
-.card.anim-active .card-info, .card.anim-active .card-info p { color: #fff !important; }
+.card.anim-active .card-info, .card.anim-active .card-info p { color: #fff !important; transform: translateY(-10px); }
 .card.anim-active .connect-btn { background: #fff !important; color: var(--dark-bg) !important; }
 
 /* Desktop Hover */
 @media (min-width: 769px) {
     .card:hover { border-radius: 50%; width: 330px; height: 330px; }
     .card:hover::before { height: 100%; border-radius: 50%; transform: scale(0.9); }
-    .card:hover .card-info, .card:hover .card-info p { color: #fff; }
+    .card:hover .card-info, .card:hover .card-info p { color: #fff; transform: translateY(-10px); }
     .card:hover .connect-btn { background: #fff; color: var(--dark-bg); }
 }
 
-/* ========== VISITOR COUNTER SECTION ========== */
+/* ========== VISITOR COUNTER ========== */
 .counter-section {
     text-align: center; padding: 80px 5%; background: rgba(255,255,255,0.03); 
     border-radius: 30px; margin: 40px auto; max-width: 1000px;
 }
 .counter-box { font-size: 4rem; font-weight: 900; color: var(--primary-green); font-family: monospace; }
-.counter-label { font-family: monospace; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; }
 
 /* ========== CONNECT FORM ========== */
 .form-container {
@@ -175,13 +174,9 @@ nav {
 
 @media (max-width: 768px) {
   nav { padding: 10px 5%; }
+  .nav-logo { height: 50px; }
   .nav-links { display: none; }
-  .hero-content h1 { font-size: 2.8rem; }
-  .grid-container { grid-template-columns: 1fr; }
-  .team-grid { flex-direction: column; align-items: center; }
-  .hero-page-logo { height: 100px; }
 }
-
 .reveal { opacity: 0; transform: translateY(40px); }
 </style>
 </head>
@@ -268,49 +263,29 @@ nav {
   <span class="label-tech reveal">CORE_ARCHITECTURE</span>
   <h2 class="section-title reveal">The Innovators & Team</h2>
   <div class="team-grid">
-    <!-- CEO -->
     <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('shreyas_pic.jpg');"></div>
-        <div class="card-info">
-            <span>Shreyas Raja Elandassery</span>
-            <p>CHIEF EXECUTIVE OFFICER</p>
-        </div>
-        <a href="https://www.instagram.com/its_jeery_97?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="connect-btn">CONNECT</a>
+        <div class="card-info"><span>Shreyas Raja Elandassery</span><p>CHIEF EXECUTIVE OFFICER</p></div>
+        <a href="https://www.instagram.com/its_jeery_97" target="_blank" class="connect-btn">CONNECT</a>
     </div>
-    <!-- COO -->
     <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('dhananjay_pic.jpg');"></div>
-        <div class="card-info">
-            <span>Dhananjay Dattu Misal</span>
-            <p>CHIEF OPERATING OFFICER</p>
-        </div>
+        <div class="card-info"><span>Dhananjay Dattu Misal</span><p>CHIEF OPERATING OFFICER</p></div>
         <a href="https://www.instagram.com/dhananjay_misal_96_k/" target="_blank" class="connect-btn">CONNECT</a>
     </div>
-    <!-- CTO -->
     <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('thejas_pic.jpg');"></div>
-        <div class="card-info">
-            <span>Thejas raja Elandassery</span>
-            <p>TEAM LEAD CTO</p>
-        </div>
+        <div class="card-info"><span>Thejas raja Elandassery</span><p>TEAM LEAD CTO</p></div>
         <a href="#" class="connect-btn">CONNECT</a>
     </div>
-    <!-- Member 1 -->
     <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('aryan_pic.jpg');"></div>
-        <div class="card-info">
-            <span>Aryan satish wagh</span>
-            <p>TEAM MEMBER</p>
-        </div>
+        <div class="card-info"><span>Aryan satish wagh</span><p>TEAM MEMBER</p></div>
         <a href="#" class="connect-btn">CONNECT</a>
     </div>
-    <!-- Member 2 -->
     <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('samrat_pic.jpg');"></div>
-        <div class="card-info">
-            <span>Samrat vijay ugale</span>
-            <p>TEAM MEMBER</p>
-        </div>
+        <div class="card-info"><span>Samrat vijay ugale</span><p>TEAM MEMBER</p></div>
         <a href="#" class="connect-btn">CONNECT</a>
     </div>
   </div>
@@ -319,9 +294,8 @@ nav {
 <!-- VISITOR COUNTER -->
 <section class="section">
     <div class="counter-section reveal">
-        <div class="counter-label">System Access Records</div>
         <div class="counter-box" id="visitor-count">0</div>
-        <div class="counter-label">Global Visitors</div>
+        <p style="color: var(--text-muted); font-family:monospace; letter-spacing:2px;">GLOBAL VISITORS</p>
     </div>
 </section>
 
@@ -330,9 +304,9 @@ nav {
   <div class="form-container reveal">
     <div class="form">
         <span class="heading">Connect with us</span>
-        <input placeholder="Your Name" type="text" id="uname" class="input">
-        <input placeholder="Your Email" type="email" id="uemail" class="input">
-        <textarea placeholder="Your Message..." id="umsg" class="textarea"></textarea>
+        <input placeholder="Your Name" type="text" id="uname" class="input" required>
+        <input placeholder="Your Email" type="email" id="uemail" class="input" required>
+        <textarea placeholder="Your Message..." id="umsg" class="textarea" required></textarea>
         <div class="button-container">
             <button class="send-button" id="submitBtn">Send</button>
         </div>
@@ -340,18 +314,12 @@ nav {
   </div>
 </section>
 
-<!-- WHATSAPP -->
-<section class="section" style="text-align: center; padding-top: 0;">
-    <p style="font-family: monospace; margin-bottom: 20px;">📞 +91 70207 58176</p>
-    <a href="https://wa.me/917020758176" target="_blank" style="background:#25D366; display:inline-block; padding: 15px 40px; border-radius: 50px; color: white; text-decoration: none; font-weight: 800;">WhatsApp Us</a>
-</section>
-
 <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #111;">
   © 2026 CleanSense AutoSan | Intelligent Smart City Infrastructure.
 </footer>
 
 <script>
-// PLEXUS BACKGROUND ANIMATION
+// PLEXUS BACKGROUND
 const canvas = document.getElementById('plexus-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -381,10 +349,7 @@ initPlexus(); drawPlexus();
 // 5-SECOND LOADER
 window.addEventListener('load', () => {
     setTimeout(() => {
-        anime({
-            targets: '#preloader', opacity: 0, duration: 800, easing: 'easeInOutQuad',
-            complete: () => { document.getElementById('preloader').style.display = 'none'; startHero(); }
-        });
+        anime({ targets: '#preloader', opacity: 0, duration: 800, easing: 'easeInOutQuad', complete: () => { document.getElementById('preloader').style.display = 'none'; startHero(); } });
     }, 5000);
 });
 
@@ -392,34 +357,69 @@ function startHero() {
     anime({ targets: '.reveal', translateY: [40, 0], opacity: [0, 1], duration: 1500, easing: 'easeOutExpo', delay: anime.stagger(100) });
 }
 
-// VISITOR COUNTER LOGIC
+// VISITOR COUNTER
 let vCount = localStorage.getItem('v_count') || 1240;
 vCount = parseInt(vCount) + 1;
 localStorage.setItem('v_count', vCount);
 document.getElementById('visitor-count').innerText = vCount;
 
-// SCROLL REVEAL & MOBILE CARD ANIMATION TRIGGER
+// SCROLL REVEAL & MOBILE RE-TRIGGER
+const isMobile = window.innerWidth <= 768;
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             anime({ targets: entry.target, opacity: [0, 1], translateY: [40, 0], duration: 1200, easing: 'easeOutQuart' });
-            
-            // If the element is a card, add the special mobile animation class
-            if(entry.target.classList.contains('card-anim-target')) {
+            if(isMobile && entry.target.classList.contains('card-anim-target')) {
                 entry.target.classList.add('anim-active');
             }
-            observer.unobserve(entry.target);
+        } else {
+            if(isMobile && entry.target.classList.contains('card-anim-target')) {
+                entry.target.classList.remove('anim-active');
+            }
         }
     });
-}, { threshold: 0.1 });
-
+}, { threshold: 0.2 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// EMAIL INTEGRATION
-document.getElementById('submitBtn').addEventListener('click', () => {
+// SPREADSHEET INTEGRATION
+document.getElementById('submitBtn').addEventListener('click', function(e) {
+    const btn = e.target;
     const name = document.getElementById('uname').value;
+    const email = document.getElementById('uemail').value;
     const msg = document.getElementById('umsg').value;
-    window.location.href = `mailto:misaldhananjay27@gmail.com?subject=Connect Request from ${name}&body=${msg}`;
+
+    if(!name || !email || !msg) { alert("Please fill all fields"); return; }
+
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwjh50U3a14eHKps0asI9NrA9H2bfwJuaLciTlXjtghVvbXVFf7-kV-YetvmzJjznxw/exec';
+    
+    // Create form data matching your sheet columns: Data, Name, Email, Message
+    const formData = new URLSearchParams();
+    formData.append('Data', new Date().toLocaleString());
+    formData.append('Name', name);
+    formData.append('Email', email);
+    formData.append('Message', msg);
+
+    fetch(scriptURL, { 
+        method: 'POST', 
+        body: formData,
+        mode: 'no-cors' // Use no-cors for Google Apps Script redirect handling
+    })
+    .then(() => {
+        alert("Send successfully");
+        btn.innerText = "Send";
+        btn.disabled = false;
+        document.getElementById('uname').value=''; 
+        document.getElementById('uemail').value=''; 
+        document.getElementById('umsg').value='';
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        btn.innerText = "Send";
+        btn.disabled = false;
+    });
 });
 </script>
 
