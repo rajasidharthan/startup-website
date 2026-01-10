@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CleanSense AutoSan | Intelligent Sanitation Engine</title>
+<title>CleanSense AutoSan | Intelligent Sanitation Solution</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Anime.js Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
@@ -13,7 +13,7 @@
   --primary-green: #22c55e;
   --primary-blue: #3b82f6;
   --accent-orange: #ff7a01;
-  --node-purple: #ff00ff; /* Background effect color */
+  --node-purple: #ff00ff;
   --dark-bg: #030712;
   --card-bg: rgba(15, 23, 42, 0.7);
   --text-main: #f8fafc;
@@ -31,7 +31,7 @@ body {
   line-height: 1.6;
 }
 
-/* ========== BG PLEXUS EFFECT (Like Video) ========== */
+/* ========== BG PLEXUS EFFECT ========== */
 #plexus-canvas {
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
@@ -69,12 +69,12 @@ body {
 /* ========== NAVIGATION & LOGO ========== */
 nav {
   position: fixed;
-  top: 0; width: 100%; padding: 15px 5%;
+  top: 0; width: 100%; padding: 10px 5%;
   background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(20px);
   z-index: 1000; display: flex; justify-content: space-between; align-items: center;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-.nav-logo { height: 40px; cursor: pointer; }
+.nav-logo { height: 75px; width: auto; cursor: pointer; transition: transform 0.3s ease; } /* RESIZED LOGO */
 .nav-links { display: flex; gap: 30px; list-style: none; }
 .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; }
 
@@ -87,10 +87,11 @@ nav {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   min-width: 100%; min-height: 100%; object-fit: cover; z-index: -1; opacity: 0.2;
 }
+.hero-content { display: flex; flex-direction: column; align-items: center; }
+.hero-page-logo { height: 160px; margin-bottom: 20px; } /* LOGO ON FIRST PAGE */
 .hero-content h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 900; margin-bottom: 20px; letter-spacing: -3px; }
-.hero-content p { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin: 0 auto; }
 
-/* ========== TECH TOOLKIT (GRID) ========== */
+/* ========== TECH GRID ========== */
 .section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; position: relative; }
 .label-tech { font-family: monospace; color: var(--primary-green); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 15px; text-transform: uppercase; }
 .section-title { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 60px; }
@@ -100,46 +101,63 @@ nav {
   background: var(--card-bg); padding: 40px; border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
 }
-.grid-card h3 { color: var(--primary-blue); font-size: 1.2rem; margin-bottom: 15px; }
 
-/* ========== INNOVATORS SECTION (FIXED BUG) ========== */
+/* ========== INNOVATORS / TEAM CARDS (MOBILE ANIMATION FIXED) ========== */
 .team-grid { 
-  display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; 
-  padding: 40px 0; min-height: 400px; /* Ensures layout stability */
+  display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; 
+  padding: 40px 0;
 }
 .card {
-  width: 100%; max-width: 350px; height: 350px;
+  width: 320px; height: 350px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; background-color: #ffffff; border-radius: 24px;
   position: relative; overflow: hidden; transition: all 0.5s ease; color: #0f172a;
 }
 .card::before {
-  content: ""; width: 100%; height: 120px; position: absolute; top: 0;
+  content: ""; width: 100%; height: 110px; position: absolute; top: 0;
   background: linear-gradient(135deg, var(--primary-green), var(--primary-blue)); transition: 0.5s;
 }
 .card .image { 
-  width: 110px; height: 110px; border-radius: 50%; border: 6px solid #fff; 
+  width: 100px; height: 100px; border-radius: 50%; border: 6px solid #fff; 
   z-index: 1; background-size: cover; background-position: center; background-color: #ddd;
 }
-.card-info { z-index: 1; margin-top: 20px; }
-.card-info span { font-weight: 800; font-size: 1.5rem; display: block; }
-.card-info p { font-family: monospace; font-size: 0.85rem; color: #64748b; font-weight: 700; margin-top: 5px; }
+.card-info { z-index: 1; margin-top: 15px; }
+.card-info span { font-weight: 800; font-size: 1.3rem; display: block; }
+.card-info p { font-family: monospace; font-size: 0.8rem; color: #64748b; font-weight: 700; margin-top: 5px; }
 
 .connect-btn {
-  z-index: 1; margin-top: 20px; padding: 10px 30px;
+  z-index: 1; margin-top: 15px; padding: 8px 25px;
   background: var(--dark-bg); color: #fff; text-decoration: none;
-  border-radius: 50px; font-weight: 700; font-size: 0.8rem; transition: 0.3s;
+  border-radius: 50px; font-weight: 700; font-size: 0.75rem; transition: 0.3s;
 }
 
-/* Morph Effect PC Only */
+/* Scroll Animation Helper Class for Mobile */
+.card.anim-active {
+    border-radius: 50% !important;
+    width: 300px !important;
+    height: 300px !important;
+}
+.card.anim-active::before { height: 100% !important; border-radius: 50% !important; transform: scale(0.9) !important; }
+.card.anim-active .card-info, .card.anim-active .card-info p { color: #fff !important; }
+.card.anim-active .connect-btn { background: #fff !important; color: var(--dark-bg) !important; }
+
+/* Desktop Hover */
 @media (min-width: 769px) {
-    .card:hover { border-radius: 50%; width: 340px; height: 340px; }
+    .card:hover { border-radius: 50%; width: 330px; height: 330px; }
     .card:hover::before { height: 100%; border-radius: 50%; transform: scale(0.9); }
     .card:hover .card-info, .card:hover .card-info p { color: #fff; }
     .card:hover .connect-btn { background: #fff; color: var(--dark-bg); }
 }
 
-/* ========== CONNECT FORM (ORANGE) ========== */
+/* ========== VISITOR COUNTER SECTION ========== */
+.counter-section {
+    text-align: center; padding: 80px 5%; background: rgba(255,255,255,0.03); 
+    border-radius: 30px; margin: 40px auto; max-width: 1000px;
+}
+.counter-box { font-size: 4rem; font-weight: 900; color: var(--primary-green); font-family: monospace; }
+.counter-label { font-family: monospace; letter-spacing: 3px; color: var(--text-muted); text-transform: uppercase; }
+
+/* ========== CONNECT FORM ========== */
 .form-container {
   max-width: 700px; width: 100%; background-color: #001925; padding: 40px; margin: 0 auto;
   border-left: 6px solid var(--accent-orange);
@@ -150,32 +168,18 @@ nav {
   width: 100%; background: #002733; border: none; padding: 15px; margin-bottom: 20px; color: #87a4b6; font-weight: bold;
 }
 .form .textarea { background: #013747; color: var(--accent-orange); height: 150px; resize: none; }
-.button-container { display: flex; gap: 15px; }
 .send-button {
-  flex: 2; background: var(--accent-orange); padding: 15px; color: #001925;
+  width: 100%; background: var(--accent-orange); padding: 15px; color: #001925;
   text-align: center; font-weight: 900; cursor: pointer; border: none; text-transform: uppercase;
 }
-.reset-button {
-  flex: 1; border: 2px solid var(--accent-orange); color: var(--accent-orange);
-  padding: 15px; text-align: center; font-weight: 800; cursor: pointer; background: transparent;
-}
 
-/* ========== WHATSAPP PULSE ========== */
-.whatsapp-section { text-align: center; padding: 60px 0; }
-.whatsapp-btn {
-  display: inline-block; padding: 18px 45px; background: #25D366; color: white;
-  text-decoration: none; border-radius: 50px; font-weight: 800;
-  box-shadow: 0 0 20px rgba(37, 211, 102, 0.2); transition: 0.3s;
-}
-.whatsapp-btn:hover { transform: scale(1.05); box-shadow: 0 0 30px rgba(37, 211, 102, 0.4); }
-
-/* ========== MOBILE VIEW ========== */
 @media (max-width: 768px) {
-  nav { padding: 15px 5%; }
+  nav { padding: 10px 5%; }
   .nav-links { display: none; }
   .hero-content h1 { font-size: 2.8rem; }
   .grid-container { grid-template-columns: 1fr; }
-  .team-grid { gap: 20px; }
+  .team-grid { flex-direction: column; align-items: center; }
+  .hero-page-logo { height: 100px; }
 }
 
 .reveal { opacity: 0; transform: translateY(40px); }
@@ -204,6 +208,8 @@ nav {
                     <rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
                     <rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
                     <rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
+                    <rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
+                    <rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
                 </g>
             </g>
             <g transform="rotate(-90) translate(49,-30)" class="pencil__point">
@@ -219,7 +225,7 @@ nav {
   <img src="CleanSense Logo.png" alt="Logo" class="nav-logo">
   <ul class="nav-links">
     <li><a href="#hero">Home</a></li>
-    <li><a href="#tech">Engine</a></li>
+    <li><a href="#tech">Technology</a></li>
     <li><a href="#innovators">Innovators</a></li>
     <li><a href="#contact">Connect</a></li>
   </ul>
@@ -231,8 +237,9 @@ nav {
     <source src="https://assets.mixkit.co/videos/preview/mixkit-technological-circuit-board-animation-4453-large.mp4" type="video/mp4">
   </video>
   <div class="hero-content">
+    <img src="CleanSense Logo.png" alt="Company Logo" class="hero-page-logo reveal">
     <h1 class="reveal">CleanSense AutoSan</h1>
-    <p class="reveal">2026 Smart Sanitation Engine. Odor-detection logic and IoT alert messaging.</p>
+    <p class="reveal">Next-Gen Smart Sanitation Architecture. Powered by real-time sensing logic and IoT alerts.</p>
   </div>
 </section>
 
@@ -256,12 +263,13 @@ nav {
   </div>
 </section>
 
-<!-- INNOVATORS (FIXED BUG) -->
+<!-- INNOVATORS -->
 <section class="section" id="innovators">
   <span class="label-tech reveal">CORE_ARCHITECTURE</span>
-  <h2 class="section-title reveal">The Innovators</h2>
+  <h2 class="section-title reveal">The Innovators & Team</h2>
   <div class="team-grid">
-    <div class="card reveal">
+    <!-- CEO -->
+    <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('shreyas_pic.jpg');"></div>
         <div class="card-info">
             <span>Shreyas Raja Elandassery</span>
@@ -269,7 +277,8 @@ nav {
         </div>
         <a href="https://www.instagram.com/its_jeery_97?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="connect-btn">CONNECT</a>
     </div>
-    <div class="card reveal">
+    <!-- COO -->
+    <div class="card reveal card-anim-target">
         <div class="image" style="background-image: url('dhananjay_pic.jpg');"></div>
         <div class="card-info">
             <span>Dhananjay Dattu Misal</span>
@@ -277,7 +286,43 @@ nav {
         </div>
         <a href="https://www.instagram.com/dhananjay_misal_96_k/" target="_blank" class="connect-btn">CONNECT</a>
     </div>
+    <!-- CTO -->
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('thejas_pic.jpg');"></div>
+        <div class="card-info">
+            <span>Thejas raja Elandassery</span>
+            <p>TEAM LEAD CTO</p>
+        </div>
+        <a href="#" class="connect-btn">CONNECT</a>
+    </div>
+    <!-- Member 1 -->
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('aryan_pic.jpg');"></div>
+        <div class="card-info">
+            <span>Aryan satish wagh</span>
+            <p>TEAM MEMBER</p>
+        </div>
+        <a href="#" class="connect-btn">CONNECT</a>
+    </div>
+    <!-- Member 2 -->
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('samrat_pic.jpg');"></div>
+        <div class="card-info">
+            <span>Samrat vijay ugale</span>
+            <p>TEAM MEMBER</p>
+        </div>
+        <a href="#" class="connect-btn">CONNECT</a>
+    </div>
   </div>
+</section>
+
+<!-- VISITOR COUNTER -->
+<section class="section">
+    <div class="counter-section reveal">
+        <div class="counter-label">System Access Records</div>
+        <div class="counter-box" id="visitor-count">0</div>
+        <div class="counter-label">Global Visitors</div>
+    </div>
 </section>
 
 <!-- CONNECT FORM -->
@@ -290,22 +335,19 @@ nav {
         <textarea placeholder="Your Message..." id="umsg" class="textarea"></textarea>
         <div class="button-container">
             <button class="send-button" id="submitBtn">Send</button>
-            <button class="reset-button" onclick="document.getElementById('uname').value=''; document.getElementById('uemail').value=''; document.getElementById('umsg').value='';">Reset</button>
         </div>
     </div>
   </div>
 </section>
 
 <!-- WHATSAPP -->
-<section class="whatsapp-section reveal">
-    <h2 class="section-title" style="font-size: 2rem;">Get In Touch</h2>
-    <p style="margin-bottom: 25px; color: var(--text-muted);">Ready to revolutionize sanitation?</p>
+<section class="section" style="text-align: center; padding-top: 0;">
     <p style="font-family: monospace; margin-bottom: 20px;">📞 +91 70207 58176</p>
-    <a href="https://wa.me/917020758176" target="_blank" class="whatsapp-btn">WhatsApp Us</a>
+    <a href="https://wa.me/917020758176" target="_blank" style="background:#25D366; display:inline-block; padding: 15px 40px; border-radius: 50px; color: white; text-decoration: none; font-weight: 800;">WhatsApp Us</a>
 </section>
 
 <footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #111;">
-  © 2026 CleanSense AutoSan | Build Smarter, Clean Better.
+  © 2026 CleanSense AutoSan | Intelligent Smart City Infrastructure.
 </footer>
 
 <script>
@@ -314,78 +356,70 @@ const canvas = document.getElementById('plexus-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 function initPlexus() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
     particles = [];
     for(let i=0; i<80; i++) {
-        particles.push({
-            x: Math.random()*canvas.width,
-            y: Math.random()*canvas.height,
-            sx: Math.random()*0.8 - 0.4,
-            sy: Math.random()*0.8 - 0.4
-        });
+        particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, sx: Math.random()*0.8 - 0.4, sy: Math.random()*0.8 - 0.4 });
     }
 }
 function drawPlexus() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.fillStyle = "#ff00ff";
-    ctx.strokeStyle = "rgba(255, 0, 255, 0.15)";
+    ctx.fillStyle = "#ff00ff"; ctx.strokeStyle = "rgba(255, 0, 255, 0.15)";
     for(let i=0; i<particles.length; i++) {
-        let p = particles[i];
-        p.x += p.sx; p.y += p.sy;
-        if(p.x<0 || p.x>canvas.width) p.sx*=-1;
-        if(p.y<0 || p.y>canvas.height) p.sy*=-1;
+        let p = particles[i]; p.x += p.sx; p.y += p.sy;
+        if(p.x<0 || p.x>canvas.width) p.sx*=-1; if(p.y<0 || p.y>canvas.height) p.sy*=-1;
         ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
         for(let j=i+1; j<particles.length; j++) {
-            let p2 = particles[j];
-            let dist = Math.hypot(p.x-p2.x, p.y-p2.y);
-            if(dist < 150) {
-                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
-            }
+            let p2 = particles[j]; let dist = Math.hypot(p.x-p2.x, p.y-p2.y);
+            if(dist < 150) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
         }
     }
     requestAnimationFrame(drawPlexus);
 }
 initPlexus(); drawPlexus();
-window.onresize = initPlexus;
 
 // 5-SECOND LOADER
 window.addEventListener('load', () => {
     setTimeout(() => {
         anime({
-            targets: '#preloader',
-            opacity: 0,
-            duration: 800,
-            easing: 'easeInOutQuad',
-            complete: () => {
-                document.getElementById('preloader').style.display = 'none';
-                startHero();
-            }
+            targets: '#preloader', opacity: 0, duration: 800, easing: 'easeInOutQuad',
+            complete: () => { document.getElementById('preloader').style.display = 'none'; startHero(); }
         });
     }, 5000);
 });
 
 function startHero() {
-    anime({ targets: '.hero-content h1', translateY: [40, 0], opacity: [0, 1], duration: 1500, easing: 'easeOutExpo' });
-    anime({ targets: '.hero-content p', opacity: [0, 1], delay: 400, duration: 1000, easing: 'linear' });
+    anime({ targets: '.reveal', translateY: [40, 0], opacity: [0, 1], duration: 1500, easing: 'easeOutExpo', delay: anime.stagger(100) });
 }
 
-// SCROLL REVEAL
+// VISITOR COUNTER LOGIC
+let vCount = localStorage.getItem('v_count') || 1240;
+vCount = parseInt(vCount) + 1;
+localStorage.setItem('v_count', vCount);
+document.getElementById('visitor-count').innerText = vCount;
+
+// SCROLL REVEAL & MOBILE CARD ANIMATION TRIGGER
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             anime({ targets: entry.target, opacity: [0, 1], translateY: [40, 0], duration: 1200, easing: 'easeOutQuart' });
+            
+            // If the element is a card, add the special mobile animation class
+            if(entry.target.classList.contains('card-anim-target')) {
+                entry.target.classList.add('anim-active');
+            }
             observer.unobserve(entry.target);
         }
     });
 }, { threshold: 0.1 });
+
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // EMAIL INTEGRATION
 document.getElementById('submitBtn').addEventListener('click', () => {
     const name = document.getElementById('uname').value;
     const msg = document.getElementById('umsg').value;
-    window.location.href = `mailto:misaldhananjay27@gmail.com?subject=CleanSense Connect from ${name}&body=${msg}`;
+    window.location.href = `mailto:misaldhananjay27@gmail.com?subject=Connect Request from ${name}&body=${msg}`;
 });
 </script>
 
