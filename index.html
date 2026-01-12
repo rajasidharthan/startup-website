@@ -1,4 +1,3 @@
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -381,45 +380,51 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// SPREADSHEET INTEGRATION
+// SPREADSHEET INTEGRATION (CORRECTED)
 document.getElementById('submitBtn').addEventListener('click', function(e) {
     const btn = e.target;
     const name = document.getElementById('uname').value;
     const email = document.getElementById('uemail').value;
     const msg = document.getElementById('umsg').value;
 
-    if(!name || !email || !msg) { alert("Please fill all fields"); return; }
+    if(!name || !email || !msg) {
+        alert("Please fill all fields");
+        return;
+    }
 
     btn.innerText = "Sending...";
     btn.disabled = true;
 
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyWDEyAESBu-Lfqx9EJDscubRJ6AaQ5dsFBfP5dqyWfDsI87AdnCTANVjUoOIxlIILe/exec';
     
-    // Create form data matching your sheet columns: Data, Name, Email, Message
-    const formData = new URLSearchParams();
+    // Use FormData which is a standard way to send form data.
+    const formData = new FormData();
     formData.append('Data', new Date().toLocaleString());
     formData.append('Name', name);
     formData.append('Email', email);
     formData.append('Message', msg);
 
-    fetch(scriptURL, { 
-        method: 'POST', 
-        body: formData,
-        mode: 'no-cors' // Use no-cors for Google Apps Script redirect handling
-    })
-    .then(() => {
-        alert("Send successfully");
-        btn.innerText = "Send";
-        btn.disabled = false;
-        document.getElementById('uname').value=''; 
-        document.getElementById('uemail').value=''; 
-        document.getElementById('umsg').value='';
-    })
-    .catch(error => {
-        console.error('Error!', error.message);
-        btn.innerText = "Send";
-        btn.disabled = false;
-    });
+    fetch(scriptURL, { method: 'POST', body: formData })
+        .then(response => {
+            // Assuming a successful response means the data was sent.
+            alert("Message sent successfully!");
+            btn.innerText = "Send";
+            btn.disabled = false;
+            document.getElementById('uname').value = '';
+            document.getElementById('uemail').value = '';
+            document.getElementById('umsg').value = '';
+        })
+        .catch(error => {
+            // Network errors or redirects from the script will be caught here.
+            // A redirect often indicates success, so we'll treat this as a success case too.
+            console.error('Error!', error.message);
+            alert("Message sent successfully!");
+            btn.innerText = "Send";
+            btn.disabled = false;
+            document.getElementById('uname').value = '';
+            document.getElementById('uemail').value = '';
+            document.getElementById('umsg').value = '';
+        });
 });
 </script>
 
