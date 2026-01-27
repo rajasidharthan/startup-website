@@ -221,6 +221,7 @@ nav {
     <li><a href="#hero">Home</a></li>
     <li><a href="#tech">Technology</a></li>
     <li><a href="#innovators">Innovators</a></li>
+    <li><a href="#guided-by">Guided By</a></li>
     <li><a href="#contact">Connect</a></li>
   </ul>
 </nav>
@@ -300,6 +301,34 @@ nav {
   </div>
 </section>
 
+<!-- GUIDED BY -->
+<section class="section" id="guided-by">
+  <span class="label-tech reveal">GUIDANCE & MENTORSHIP</span>
+  <h2 class="section-title reveal">Guided By</h2>
+  <div class="team-grid">
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('');"></div>
+        <div class="card-info"><span>Dr.B.B. Ambade</span><p>Principal PPS</p></div>
+    </div>
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('');"></div>
+        <div class="card-info"><span>K.T. Adsul</span><p>Vice-Principal PPS</p></div>
+    </div>
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('');"></div>
+        <div class="card-info"><span>Mrs. M.S. Jagdhane</span><p>Supervisor PPS</p></div>
+    </div>
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('');"></div>
+        <div class="card-info"><span>Dr.D.D. Arangle</span><p>Mentor</p></div>
+    </div>
+    <div class="card reveal card-anim-target">
+        <div class="image" style="background-image: url('');"></div>
+        <div class="card-info"><span>Dr.sanjay L. Kurkute</span><p>Ceo PRISM FORUM</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- VISITOR COUNTER -->
 <section class="section">
     <div class="counter-section reveal">
@@ -330,7 +359,7 @@ nav {
 <script>
 // PLEXUS BACKGROUND
 const canvas = document.getElementById('plexus-canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d'); // CORRECTED THIS LINE
 let particles = [];
 function initPlexus() {
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
