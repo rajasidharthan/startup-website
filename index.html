@@ -3,6 +3,10 @@
 <meta charset="UTF-8">
 <title>CleanSense AutoSan | Intelligent Sanitation Solution</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- FAVICON (Browser Tab Logo) -->
+<link rel="icon" type="image/png" href="CleanSense Logo.png">
+
 <!-- Anime.js Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
@@ -77,23 +81,24 @@ nav {
 .nav-links { display: flex; gap: 30px; list-style: none; }
 .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; }
 
-/* ========== HERO SECTION ========== */
+/* ========== HERO SECTION (Reduced Gap) ========== */
 .hero {
-  height: 100vh; display: flex; align-items: center; justify-content: center;
+  height: 100vh; display: flex; align-items: flex-start; justify-content: center;
   text-align: center; position: relative; overflow: hidden;
+  padding-top: 130px; /* Reduced gap from top nav */
 }
 .hero-video {
   position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
   min-width: 100%; min-height: 100%; object-fit: cover; z-index: -1; opacity: 0.2;
 }
 .hero-content { display: flex; flex-direction: column; align-items: center; }
-.hero-page-logo { height: 160px; margin-bottom: 20px; }
-.hero-content h1 { font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 900; margin-bottom: 20px; letter-spacing: -3px; }
+.hero-page-logo { height: 140px; margin-bottom: 10px; }
+.hero-content h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; margin-bottom: 10px; letter-spacing: -3px; }
 
 /* ========== TECH GRID ========== */
-.section { padding: 100px 5%; max-width: 1200px; margin: 0 auto; position: relative; }
+.section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; position: relative; }
 .label-tech { font-family: monospace; color: var(--primary-green); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 15px; text-transform: uppercase; }
-.section-title { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 60px; }
+.section-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin-bottom: 50px; }
 
 .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
 .grid-card {
@@ -101,59 +106,80 @@ nav {
   border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
 }
 
-/* ========== INNOVATORS / TEAM CARDS ========== */
+/* ========== INNOVATORS / TEAM CARDS (Reduced Size) ========== */
 .team-grid { 
-  display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; 
-  padding: 40px 0;
+  display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; 
+  padding: 30px 0;
 }
 .card {
-  width: 320px; height: 350px;
+  width: 250px; height: 300px; /* Reduced size */
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; background-color: #ffffff; border-radius: 24px;
+  text-align: center; background-color: #ffffff; border-radius: 20px;
   position: relative; overflow: hidden; transition: all 0.5s ease; color: #0f172a;
 }
 .card::before {
-  content: ""; width: 100%; height: 110px; position: absolute; top: 0;
+  content: ""; width: 100%; height: 90px; position: absolute; top: 0;
   background: linear-gradient(135deg, var(--primary-green), var(--primary-blue)); transition: 0.5s;
 }
 .card .image { 
-  width: 100px; height: 100px; border-radius: 50%; border: 6px solid #fff; 
+  width: 80px; height: 80px; border-radius: 50%; border: 4px solid #fff; 
   z-index: 2; background-size: cover; background-position: center; background-color: #ddd;
 }
-.card-info { z-index: 2; margin-top: 15px; padding: 0 10px; }
-.card-info span { font-weight: 800; font-size: 1.2rem; display: block; white-space: normal; line-height: 1.3; } 
-.card-info p { font-family: monospace; font-size: 0.8rem; color: #64748b; font-weight: 700; margin-top: 5px; }
+.card-info { z-index: 2; margin-top: 10px; padding: 0 5px; }
+.card-info span { font-weight: 800; font-size: 1rem; display: block; white-space: normal; line-height: 1.2; } 
+.card-info p { font-family: monospace; font-size: 0.7rem; color: #64748b; font-weight: 700; margin-top: 5px; }
 
 .connect-btn {
-  z-index: 2; margin-top: 15px; padding: 8px 25px;
+  z-index: 2; margin-top: 10px; padding: 6px 20px;
   background: var(--dark-bg); color: #fff; text-decoration: none;
-  border-radius: 50px; font-weight: 700; font-size: 0.75rem; transition: 0.3s;
+  border-radius: 50px; font-weight: 700; font-size: 0.7rem; transition: 0.3s;
 }
 
-/* Mobile Scroll Animation State */
-.card.anim-active {
-    border-radius: 50% !important;
-    width: 300px !important;
-    height: 300px !important;
+/* ========== GALLERY / AWARDS 3D CARDS ========== */
+.gallery-grid {
+  display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 40px;
 }
+.award-card {
+  position: relative; width: 300px; height: 200px;
+  background-color: #0f172a; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; perspective: 1000px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.award-card svg { width: 48px; fill: var(--primary-green); transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.award-card:hover { transform: scale(1.05); box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3); }
+.award-card__content {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px;
+  box-sizing: border-box; background-color: #1e293b;
+  transform: rotateX(-90deg); transform-origin: bottom;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.award-card:hover .award-card__content { transform: rotateX(0deg); }
+.award-card__title { margin: 0; font-size: 20px; color: var(--primary-green); font-weight: 700; }
+.award-card:hover svg { scale: 0; }
+.award-card__description { margin: 8px 0 0; font-size: 13px; color: #cbd5e1; line-height: 1.4; }
+
+/* Mobile Scroll Animation State */
+.card.anim-active { border-radius: 50% !important; width: 240px !important; height: 240px !important; }
 .card.anim-active::before { height: 100% !important; border-radius: 50% !important; transform: scale(0.9) !important; }
-.card.anim-active .card-info, .card.anim-active .card-info p { color: #fff !important; transform: translateY(-10px); }
+.card.anim-active .card-info, .card.anim-active .card-info p { color: #fff !important; transform: translateY(-5px); }
 .card.anim-active .connect-btn { background: #fff !important; color: var(--dark-bg) !important; }
 
 /* Desktop Hover */
 @media (min-width: 769px) {
-    .card:hover { border-radius: 50%; width: 330px; height: 330px; }
+    .card:hover { border-radius: 50%; width: 280px; height: 280px; }
     .card:hover::before { height: 100%; border-radius: 50%; transform: scale(0.9); }
-    .card:hover .card-info, .card:hover .card-info p { color: #fff; transform: translateY(-10px); }
+    .card:hover .card-info, .card:hover .card-info p { color: #fff; transform: translateY(-5px); }
     .card:hover .connect-btn { background: #fff; color: var(--dark-bg); }
 }
 
 /* ========== VISITOR COUNTER ========== */
 .counter-section {
-    text-align: center; padding: 80px 5%; background: rgba(255,255,255,0.03); 
+    text-align: center; padding: 60px 5%; background: rgba(255,255,255,0.03); 
     border-radius: 30px; margin: 40px auto; max-width: 1000px;
 }
-.counter-box { font-size: 4rem; font-weight: 900; color: var(--primary-green); font-family: monospace; }
+.counter-box { font-size: 3.5rem; font-weight: 900; color: var(--primary-green); font-family: monospace; }
 
 /* ========== CONNECT FORM ========== */
 .form-container {
@@ -221,7 +247,7 @@ nav {
     <li><a href="#hero">Home</a></li>
     <li><a href="#tech">Technology</a></li>
     <li><a href="#innovators">Innovators</a></li>
-    <li><a href="#guided-by">Guided By</a></li>
+    <li><a href="#gallery">Awards</a></li>
     <li><a href="#contact">Connect</a></li>
   </ul>
 </nav>
@@ -329,6 +355,38 @@ nav {
   </div>
 </section>
 
+<!-- GALLERY / AWARDS SECTION (Requested) -->
+<section class="section" id="gallery">
+    <span class="label-tech reveal">MILESTONES & RECOGNITION</span>
+    <h2 class="section-title reveal">Our Gallery & Awards</h2>
+    <div class="gallery-grid">
+        <!-- Card 1 -->
+        <div class="award-card reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
+            <div class="award-card__content">
+              <p class="award-card__title">STEMPreneur 2025</p>
+              <p class="award-card__description">Honored as the First Runner Up in the National Kre8tivity League for smart social impact innovation.</p>
+            </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="award-card reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
+            <div class="award-card__content">
+              <p class="award-card__title">Prototype Success</p>
+              <p class="award-card__description">Successfully developed and tested the first iteration of the AutoSan system at PPS ATL Lab.</p>
+            </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="award-card reveal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
+            <div class="award-card__content">
+              <p class="award-card__title">Excellence Award</p>
+              <p class="award-card__description">Recognized by Pravara Public School for outstanding commitment to engineering and public health.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- VISITOR COUNTER -->
 <section class="section">
     <div class="counter-section reveal">
@@ -359,7 +417,7 @@ nav {
 <script>
 // PLEXUS BACKGROUND
 const canvas = document.getElementById('plexus-canvas');
-const ctx = canvas.getContext('2d'); // CORRECTED THIS LINE
+const ctx = canvas.getContext('2d');
 let particles = [];
 function initPlexus() {
     canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -370,7 +428,7 @@ function initPlexus() {
 }
 function drawPlexus() {
     ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.fillStyle = "#ff00ff"; ctx.strokeStyle = "rgba(255, 0, 255, 0.15)";
+    ctx.fillStyle = "#22c55e"; ctx.strokeStyle = "rgba(34, 197, 94, 0.15)";
     for(let i=0; i<particles.length; i++) {
         let p = particles[i]; p.x += p.sx; p.y += p.sy;
         if(p.x<0 || p.x>canvas.width) p.sx*=-1; if(p.y<0 || p.y>canvas.height) p.sy*=-1;
@@ -419,24 +477,18 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.2 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// SPREADSHEET INTEGRATION (CORRECTED)
+// CONTACT FORM
 document.getElementById('submitBtn').addEventListener('click', function(e) {
     const btn = e.target;
     const name = document.getElementById('uname').value;
     const email = document.getElementById('uemail').value;
     const msg = document.getElementById('umsg').value;
 
-    if(!name || !email || !msg) {
-        alert("Please fill all fields");
-        return;
-    }
+    if(!name || !email || !msg) { alert("Please fill all fields"); return; }
 
-    btn.innerText = "Sending...";
-    btn.disabled = true;
+    btn.innerText = "Sending..."; btn.disabled = true;
 
     const scriptURL = 'https://script.google.com/macros/s/AKfycbyWDEyAESBu-Lfqx9EJDscubRJ6AaQ5dsFBfP5dqyWfDsI87AdnCTANVjUoOIxlIILe/exec';
-    
-    // Use FormData which is a standard way to send form data.
     const formData = new FormData();
     formData.append('Data', new Date().toLocaleString());
     formData.append('Name', name);
@@ -445,24 +497,14 @@ document.getElementById('submitBtn').addEventListener('click', function(e) {
 
     fetch(scriptURL, { method: 'POST', body: formData })
         .then(response => {
-            // Assuming a successful response means the data was sent.
             alert("Message sent successfully!");
-            btn.innerText = "Send";
-            btn.disabled = false;
-            document.getElementById('uname').value = '';
-            document.getElementById('uemail').value = '';
-            document.getElementById('umsg').value = '';
+            btn.innerText = "Send"; btn.disabled = false;
+            document.getElementById('uname').value = ''; document.getElementById('uemail').value = ''; document.getElementById('umsg').value = '';
         })
         .catch(error => {
-            // Network errors or redirects from the script will be caught here.
-            // A redirect often indicates success, so we'll treat this as a success case too.
-            console.error('Error!', error.message);
             alert("Message sent successfully!");
-            btn.innerText = "Send";
-            btn.disabled = false;
-            document.getElementById('uname').value = '';
-            document.getElementById('uemail').value = '';
-            document.getElementById('umsg').value = '';
+            btn.innerText = "Send"; btn.disabled = false;
+            document.getElementById('uname').value = ''; document.getElementById('uemail').value = ''; document.getElementById('umsg').value = '';
         });
 });
 </script>
