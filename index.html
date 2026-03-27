@@ -1,513 +1,1512 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CleanSense AutoSan | Intelligent Sanitation Solution</title>
+<title>CleanSense AutoSan | Smart Railway Sanitation</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- FAVICON (Browser Tab Logo) -->
 <link rel="icon" type="image/png" href="CleanSense Logo.png">
 
-<!-- Anime.js Library -->
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- Lottie for icon animations -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 <style>
-/* ========== GLOBAL STYLES ========== */
+/* ==================== VARIABLES ==================== */
 :root {
-  --primary-green: #22c55e;
-  --primary-blue: #3b82f6;
-  --accent-orange: #ff7a01;
-  --node-purple: #ff00ff;
-  --dark-bg: #030712;
-  --card-bg: rgba(15, 23, 42, 0.7);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
+  --teal:       #00d4aa;
+  --teal-dark:  #00a080;
+  --teal-glow:  rgba(0, 212, 170, 0.18);
+  --navy:       #020c1b;
+  --navy-mid:   #071428;
+  --navy-card:  rgba(7, 20, 40, 0.75);
+  --blue-accent:#0a7fff;
+  --white:      #f0f6ff;
+  --muted:      #7a96b8;
+  --danger:     #ff4b6e;
+  --mono:       'JetBrains Mono', monospace;
+  --sans:       'DM Sans', sans-serif;
+  --display:    'Syne', sans-serif;
+  --radius:     18px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ==================== RESET & BASE ==================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
-  font-family: 'Inter', -apple-system, sans-serif;
-  background-color: var(--dark-bg);
-  color: var(--text-main);
+  font-family: var(--sans);
+  background: var(--navy);
+  color: var(--white);
   overflow-x: hidden;
-  line-height: 1.6;
+  line-height: 1.65;
+}
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; }
+
+/* ==================== SCROLLBAR ==================== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 4px; }
+
+/* ==================== CANVAS BG ==================== */
+#bg-canvas {
+  position: fixed; inset: 0; z-index: 0;
+  background: radial-gradient(ellipse at 20% 30%, #011627 0%, var(--navy) 60%);
 }
 
-/* ========== BG PLEXUS EFFECT ========== */
-#plexus-canvas {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  z-index: -1;
-  background: radial-gradient(circle at center, #0a0e1a 0%, #030712 100%);
-}
-
-/* ========== 5-SECOND TECHNICAL LOADER ========== */
+/* ==================== PRELOADER ==================== */
 #preloader {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: var(--dark-bg);
-  display: flex; justify-content: center; align-items: center;
-  z-index: 10000;
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--navy);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 24px;
 }
-.pencil { width: 10em; height: 10em; }
-.pencil__body1, .pencil__body2, .pencil__body3, .pencil__eraser, .pencil__eraser-skew, .pencil__point, .pencil__rotate, .pencil__stroke {
-  animation-duration: 3s; animation-timing-function: linear; animation-iteration-count: infinite;
+.loader-ring {
+  width: 80px; height: 80px;
+  border: 2px solid rgba(0,212,170,0.1);
+  border-top: 2px solid var(--teal);
+  border-right: 2px solid var(--teal);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
-.pencil__body1 { animation-name: pencilBody1; } .pencil__body2 { animation-name: pencilBody2; } .pencil__body3 { animation-name: pencilBody3; }
-.pencil__eraser { animation-name: pencilEraser; transform: rotate(-90deg) translate(49px,0); }
-.pencil__eraser-skew { animation-name: pencilEraserSkew; animation-timing-function: ease-in-out; }
-.pencil__point { animation-name: pencilPoint; transform: rotate(-90deg) translate(49px,-30px); }
-.pencil__rotate { animation-name: pencilRotate; }
-.pencil__stroke { animation-name: pencilStroke; transform: translate(100px,100px) rotate(-113deg); }
-@keyframes pencilBody1 { from, to { stroke-dashoffset: 351.86; transform: rotate(-90deg); } 50% { stroke-dashoffset: 150.8; transform: rotate(-225deg); } }
-@keyframes pencilBody2 { from, to { stroke-dashoffset: 406.84; transform: rotate(-90deg); } 50% { stroke-dashoffset: 174.36; transform: rotate(-225deg); } }
-@keyframes pencilBody3 { from, to { stroke-dashoffset: 296.88; transform: rotate(-90deg); } 50% { stroke-dashoffset: 127.23; transform: rotate(-225deg); } }
-@keyframes pencilEraser { from, to { transform: rotate(-45deg) translate(49px,0); } 50% { transform: rotate(0deg) translate(49px,0); } }
-@keyframes pencilEraserSkew { from, 32.5%, 67.5%, to { transform: skewX(0); } 35%, 65% { transform: skewX(-4deg); } 37.5%, 62.5% { transform: skewX(8deg); } 40%, 45%, 50%, 55%, 60% { transform: skewX(-15deg); } 42.5%, 47.5%, 52.5%, 57.5% { transform: skewX(15deg); } }
-@keyframes pencilPoint { from, to { transform: rotate(-90deg) translate(49px,-30px); } 50% { transform: rotate(-225deg) translate(49px,-30px); } }
-@keyframes pencilRotate { from { transform: translate(100px,100px) rotate(0); } to { transform: translate(100px,100px) rotate(720deg); } }
-@keyframes pencilStroke { from { stroke-dashoffset: 439.82; transform: translate(100px,100px) rotate(-113deg); } 50% { stroke-dashoffset: 164.93; transform: translate(100px,100px) rotate(-113deg); } 75%, to { stroke-dashoffset: 439.82; transform: translate(100px,100px) rotate(112deg); } }
+.loader-inner {
+  position: absolute; width: 54px; height: 54px;
+  border: 2px solid rgba(0,212,170,0.05);
+  border-bottom: 2px solid var(--blue-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite reverse;
+}
+.loader-wrap { position: relative; width:80px;height:80px;display:flex;align-items:center;justify-content:center; }
+.loader-text {
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 4px;
+  color: var(--teal); text-transform: uppercase;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.loader-brand { font-family: var(--display); font-size: 1.1rem; color: var(--white); opacity: 0.5; letter-spacing: 2px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100%{opacity:.4} 50%{opacity:1} }
 
-/* ========== NAVIGATION & LOGO ========== */
+/* ==================== NAV ==================== */
 nav {
-  position: fixed;
-  top: 0; width: 100%; padding: 10px 5%;
-  background: rgba(3, 7, 18, 0.8); backdrop-filter: blur(20px);
-  z-index: 1000; display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  position: fixed; top: 0; width: 100%; z-index: 1000;
+  padding: 0 5%;
+  background: rgba(2, 12, 27, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(0, 212, 170, 0.08);
+  display: flex; align-items: center; justify-content: space-between;
+  height: 72px;
+  transition: all 0.4s ease;
 }
-.nav-logo { height: 75px; width: auto; cursor: pointer; transition: transform 0.3s ease; }
-.nav-links { display: flex; gap: 30px; list-style: none; }
-.nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.85rem; font-family: monospace; text-transform: uppercase; letter-spacing: 1px; }
+nav.scrolled {
+  background: rgba(2,12,27,0.92);
+  height: 64px;
+}
+.nav-logo { height: 52px; width: auto; cursor: pointer; }
+.nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0;
+  width: 0; height: 1px; background: var(--teal);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--teal); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  background: var(--teal); color: var(--navy) !important;
+  padding: 8px 20px; border-radius: 6px; font-weight: 600;
+}
+.nav-cta:hover { background: var(--teal-dark); color: var(--navy) !important; }
+.nav-cta::after { display: none !important; }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
 
-/* ========== HERO SECTION (Reduced Gap) ========== */
+/* ==================== HERO ==================== */
 .hero {
-  height: 100vh; display: flex; align-items: flex-start; justify-content: center;
-  text-align: center; position: relative; overflow: hidden;
-  padding-top: 130px; /* Reduced gap from top nav */
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 120px 5% 80px;
 }
 .hero-video {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  min-width: 100%; min-height: 100%; object-fit: cover; z-index: -1; opacity: 0.2;
+  position: absolute; inset: 0;
+  min-width: 100%; min-height: 100%;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 1; opacity: 0.07;
 }
-.hero-content { display: flex; flex-direction: column; align-items: center; }
-.hero-page-logo { height: 140px; margin-bottom: 10px; }
-.hero-content h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; margin-bottom: 10px; letter-spacing: -3px; }
+.hero-overlay {
+  position: absolute; inset: 0; z-index: 2;
+  background: linear-gradient(135deg, rgba(0,212,170,0.04) 0%, transparent 50%, rgba(10,127,255,0.04) 100%);
+}
+.hero-inner {
+  position: relative; z-index: 3;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; width: 100%;
+}
+.hero-left { display: flex; flex-direction: column; gap: 28px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.2);
+  padding: 6px 16px; border-radius: 50px; width: fit-content;
+  font-family: var(--mono); font-size: 0.68rem; letter-spacing: 2px;
+  color: var(--teal); text-transform: uppercase;
+}
+.badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+.hero-title {
+  font-family: var(--display); font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  font-weight: 800; line-height: 1.05; letter-spacing: -2px;
+}
+.hero-title .line { overflow: hidden; display: block; }
+.hero-title .accent { color: var(--teal); }
+.hero-desc {
+  font-size: 1.05rem; color: var(--muted); max-width: 500px; line-height: 1.8;
+}
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--teal); color: var(--navy);
+  padding: 14px 32px; border-radius: 8px;
+  font-family: var(--display); font-weight: 700; font-size: 0.9rem;
+  border: none; cursor: pointer; transition: all 0.3s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,212,170,0.3); }
+.btn-outline {
+  background: transparent; color: var(--white);
+  padding: 14px 32px; border-radius: 8px;
+  font-family: var(--display); font-weight: 600; font-size: 0.9rem;
+  border: 1px solid rgba(255,255,255,0.15); cursor: pointer; transition: all 0.3s;
+}
+.btn-outline:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
 
-/* ========== TECH GRID ========== */
-.section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; position: relative; }
-.label-tech { font-family: monospace; color: var(--primary-green); font-size: 0.8rem; letter-spacing: 4px; display: block; margin-bottom: 15px; text-transform: uppercase; }
-.section-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; margin-bottom: 50px; }
+.hero-stats {
+  display: flex; gap: 32px; padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.stat-item {}
+.stat-num {
+  font-family: var(--display); font-size: 1.8rem; font-weight: 800;
+  color: var(--teal);
+}
+.stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
-.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-.grid-card {
-  background: var(--card-bg); padding: 40px; border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+/* HERO RIGHT - Glassmorphism dashboard card */
+.hero-right { display: flex; flex-direction: column; gap: 20px; }
+.glass-card {
+  background: rgba(7, 20, 40, 0.55);
+  border: 1px solid rgba(0, 212, 170, 0.12);
+  border-radius: var(--radius);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 28px;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
+.glass-card:hover {
+  border-color: rgba(0,212,170,0.28);
+  box-shadow: 0 8px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,170,0.08);
+}
+.card-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
+}
+.card-label {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 3px;
+  color: var(--muted); text-transform: uppercase;
+}
+.status-badge {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(0,212,170,0.1); border: 1px solid rgba(0,212,170,0.2);
+  padding: 4px 10px; border-radius: 50px;
+  font-family: var(--mono); font-size: 0.6rem; color: var(--teal);
+}
+.status-badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); animation: pulse 1.5s infinite; }
+.toilet-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+.toilet-item {
+  background: rgba(0,212,170,0.04);
+  border: 1px solid rgba(0,212,170,0.08);
+  border-radius: 10px; padding: 14px;
+}
+.toilet-id { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
+.toilet-meters { display: flex; gap: 10px; }
+.meter-wrap { flex: 1; }
+.meter-label { font-size: 0.58rem; color: var(--muted); margin-bottom: 4px; }
+.meter-bar { height: 4px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
+.meter-fill { height: 100%; border-radius: 4px; transition: width 1.5s ease; }
+.fill-teal { background: linear-gradient(90deg, var(--teal-dark), var(--teal)); }
+.fill-blue { background: linear-gradient(90deg, #0a5fff, var(--blue-accent)); }
+.fill-red  { background: linear-gradient(90deg, #ff2255, var(--danger)); }
+.meter-val { font-family: var(--mono); font-size: 0.65rem; color: var(--white); margin-top: 3px; }
 
-/* ========== INNOVATORS / TEAM CARDS (Reduced Size) ========== */
-.team-grid { 
-  display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; 
-  padding: 30px 0;
-}
-.card {
-  width: 250px; height: 300px; /* Reduced size */
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; background-color: #ffffff; border-radius: 20px;
-  position: relative; overflow: hidden; transition: all 0.5s ease; color: #0f172a;
-}
-.card::before {
-  content: ""; width: 100%; height: 90px; position: absolute; top: 0;
-  background: linear-gradient(135deg, var(--primary-green), var(--primary-blue)); transition: 0.5s;
-}
-.card .image { 
-  width: 80px; height: 80px; border-radius: 50%; border: 4px solid #fff; 
-  z-index: 2; background-size: cover; background-position: center; background-color: #ddd;
-}
-.card-info { z-index: 2; margin-top: 10px; padding: 0 5px; }
-.card-info span { font-weight: 800; font-size: 1rem; display: block; white-space: normal; line-height: 1.2; } 
-.card-info p { font-family: monospace; font-size: 0.7rem; color: #64748b; font-weight: 700; margin-top: 5px; }
+.sensor-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.sensor-row:last-child { border-bottom: none; padding-bottom: 0; }
+.sensor-name { font-size: 0.78rem; color: var(--muted); }
+.sensor-val { font-family: var(--mono); font-size: 0.8rem; color: var(--teal); font-weight: 500; }
+.sensor-alert { color: var(--danger); }
 
-.connect-btn {
-  z-index: 2; margin-top: 10px; padding: 6px 20px;
-  background: var(--dark-bg); color: #fff; text-decoration: none;
-  border-radius: 50px; font-weight: 700; font-size: 0.7rem; transition: 0.3s;
+/* ==================== SECTIONS ==================== */
+.section {
+  padding: 100px 5%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative; z-index: 5;
 }
+.section-full { max-width: 100%; }
+.tag {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 4px;
+  color: var(--teal); text-transform: uppercase; display: block;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800; line-height: 1.1; letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.section-sub {
+  font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.8;
+}
+.section-head { margin-bottom: 60px; }
 
-/* ========== GALLERY / AWARDS 3D CARDS ========== */
-.gallery-grid {
-  display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; margin-top: 40px;
+/* ==================== MARQUEE ==================== */
+.marquee-wrap {
+  width: 100%; overflow: hidden;
+  border-top: 1px solid rgba(0,212,170,0.08);
+  border-bottom: 1px solid rgba(0,212,170,0.08);
+  padding: 18px 0; background: rgba(0,212,170,0.02);
+  position: relative; z-index: 5;
 }
-.award-card {
-  position: relative; width: 300px; height: 200px;
-  background-color: #0f172a; border-radius: 10px;
+.marquee-track {
+  display: flex; gap: 60px; width: max-content;
+  animation: marquee 28s linear infinite;
+}
+.marquee-item {
+  display: flex; align-items: center; gap: 12px; white-space: nowrap;
+  font-family: var(--mono); font-size: 0.72rem; letter-spacing: 2px;
+  color: var(--muted); text-transform: uppercase;
+}
+.marquee-item span { color: var(--teal); font-size: 1rem; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ==================== PROBLEM SECTION ==================== */
+.problem-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 24px; align-items: start;
+}
+.problem-visual {
+  background: var(--navy-card);
+  border: 1px solid rgba(255,77,110,0.15);
+  border-radius: var(--radius); padding: 40px;
+  position: relative; overflow: hidden;
+}
+.problem-visual::before {
+  content: ''; position: absolute; top: -60px; right: -60px;
+  width: 200px; height: 200px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,75,110,0.08) 0%, transparent 70%);
+}
+.problem-stat { margin-bottom: 32px; }
+.problem-num {
+  font-family: var(--display); font-size: 3.5rem; font-weight: 800;
+  color: var(--danger); line-height: 1;
+}
+.problem-desc { font-size: 0.9rem; color: var(--muted); margin-top: 6px; max-width: 280px; }
+.problem-list { display: flex; flex-direction: column; gap: 16px; }
+.problem-item {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px 20px;
+  background: rgba(7,20,40,0.6); border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.05);
+  transition: border-color 0.3s;
+}
+.problem-item:hover { border-color: rgba(0,212,170,0.15); }
+.problem-icon {
+  width: 38px; height: 38px; min-width: 38px; border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  overflow: hidden; perspective: 1000px;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 1rem;
 }
-.award-card svg { width: 48px; fill: var(--primary-green); transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-.award-card:hover { transform: scale(1.05); box-shadow: 0 8px 16px rgba(34, 197, 94, 0.3); }
-.award-card__content {
-  position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 20px;
-  box-sizing: border-box; background-color: #1e293b;
-  transform: rotateX(-90deg); transform-origin: bottom;
-  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.award-card:hover .award-card__content { transform: rotateX(0deg); }
-.award-card__title { margin: 0; font-size: 20px; color: var(--primary-green); font-weight: 700; }
-.award-card:hover svg { scale: 0; }
-.award-card__description { margin: 8px 0 0; font-size: 13px; color: #cbd5e1; line-height: 1.4; }
+.icon-red { background: rgba(255,75,110,0.1); }
+.icon-orange { background: rgba(255,165,0,0.1); }
+.icon-yellow { background: rgba(255,220,0,0.1); }
+.problem-item-title { font-size: 0.88rem; font-weight: 600; margin-bottom: 4px; }
+.problem-item-text { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
 
-/* Mobile Scroll Animation State */
-.card.anim-active { border-radius: 50% !important; width: 240px !important; height: 240px !important; }
-.card.anim-active::before { height: 100% !important; border-radius: 50% !important; transform: scale(0.9) !important; }
-.card.anim-active .card-info, .card.anim-active .card-info p { color: #fff !important; transform: translateY(-5px); }
-.card.anim-active .connect-btn { background: #fff !important; color: var(--dark-bg) !important; }
+/* ==================== HOW IT WORKS ==================== */
+.how-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+  counter-reset: step;
+}
+.how-card {
+  background: var(--navy-card);
+  border: 1px solid rgba(0,212,170,0.08);
+  border-radius: var(--radius); padding: 32px 24px;
+  position: relative; overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  counter-increment: step;
+}
+.how-card::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute; top: 20px; right: 20px;
+  font-family: var(--display); font-size: 3.5rem; font-weight: 800;
+  color: rgba(0,212,170,0.05); line-height: 1;
+}
+.how-card:hover {
+  border-color: rgba(0,212,170,0.3);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,0,0,0.4), 0 0 0 1px rgba(0,212,170,0.1);
+}
+.how-icon {
+  width: 52px; height: 52px; border-radius: 12px;
+  background: rgba(0,212,170,0.08); border: 1px solid rgba(0,212,170,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin-bottom: 20px;
+}
+.how-title { font-family: var(--display); font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+.how-text { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+.how-connector {
+  position: absolute; right: -13px; top: 50%; transform: translateY(-50%);
+  width: 26px; height: 2px; background: rgba(0,212,170,0.2); z-index: 2;
+}
+.how-connector::after {
+  content: ''; position: absolute; right: 0; top: -3px;
+  width: 0; height: 0;
+  border-left: 6px solid rgba(0,212,170,0.2);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+}
+.how-card:last-child .how-connector { display: none; }
 
-/* Desktop Hover */
-@media (min-width: 769px) {
-    .card:hover { border-radius: 50%; width: 280px; height: 280px; }
-    .card:hover::before { height: 100%; border-radius: 50%; transform: scale(0.9); }
-    .card:hover .card-info, .card:hover .card-info p { color: #fff; transform: translateY(-5px); }
-    .card:hover .connect-btn { background: #fff; color: var(--dark-bg); }
+/* ==================== TECH FEATURES ==================== */
+.features-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.feature-card {
+  background: var(--navy-card);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--radius); padding: 36px 28px;
+  position: relative; overflow: hidden;
+  transition: all 0.4s;
+}
+.feature-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 100%; height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--blue-accent));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.feature-card:hover { border-color: rgba(0,212,170,0.2); transform: translateY(-4px); }
+.feature-card:hover::after { transform: scaleX(1); }
+.feature-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(0,212,170,0.12), rgba(10,127,255,0.08));
+  border: 1px solid rgba(0,212,170,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 24px;
+}
+.feature-title { font-family: var(--display); font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; }
+.feature-text { font-size: 0.83rem; color: var(--muted); line-height: 1.75; }
+.feature-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.chip {
+  background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.12);
+  padding: 3px 10px; border-radius: 50px;
+  font-family: var(--mono); font-size: 0.6rem; color: var(--teal);
 }
 
-/* ========== VISITOR COUNTER ========== */
-.counter-section {
-    text-align: center; padding: 60px 5%; background: rgba(255,255,255,0.03); 
-    border-radius: 30px; margin: 40px auto; max-width: 1000px;
+/* ==================== AWARDS ==================== */
+.awards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.award-card {
+  position: relative; height: 220px;
+  border-radius: var(--radius); overflow: hidden;
+  cursor: default;
+  border: 1px solid rgba(255,255,255,0.06);
 }
-.counter-box { font-size: 3.5rem; font-weight: 900; color: var(--primary-green); font-family: monospace; }
+.award-front, .award-back {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 32px; text-align: center;
+  backface-visibility: hidden;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.award-front {
+  background: var(--navy-card);
+}
+.award-back {
+  background: linear-gradient(135deg, rgba(0,212,170,0.12), rgba(10,127,255,0.1));
+  border: 1px solid rgba(0,212,170,0.2);
+  transform: rotateY(180deg);
+  border-radius: var(--radius);
+}
+.award-card:hover .award-front { transform: rotateY(-180deg); }
+.award-card:hover .award-back  { transform: rotateY(0deg); }
+.award-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.award-title { font-family: var(--display); font-size: 1.05rem; font-weight: 700; }
+.award-sub { font-size: 0.75rem; color: var(--muted); margin-top: 6px; }
+.award-back-title { font-family: var(--display); font-size: 1rem; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
+.award-back-desc { font-size: 0.78rem; color: var(--white); line-height: 1.65; }
 
-/* ========== CONNECT FORM ========== */
-.form-container {
-  max-width: 700px; width: 100%; background-color: #001925; padding: 40px; margin: 0 auto;
-  border-left: 6px solid var(--accent-orange);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%);
+/* ==================== TEAM ==================== */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.team-card {
+  background: var(--navy-card); border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 28px 20px; text-align: center;
+  transition: all 0.4s;
+  position: relative; overflow: hidden;
 }
-.heading { display: block; color: white; font-size: 2rem; font-weight: 800; margin-bottom: 25px; font-family: monospace; }
-.form .input, .form .textarea {
-  width: 100%; background: #002733; border: none; padding: 15px; margin-bottom: 20px; color: #87a4b6; font-weight: bold;
+.team-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--blue-accent));
+  transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
 }
-.form .textarea { background: #013747; color: var(--accent-orange); height: 150px; resize: none; }
-.send-button {
-  width: 100%; background: var(--accent-orange); padding: 15px; color: #001925;
-  text-align: center; font-weight: 900; cursor: pointer; border: none; text-transform: uppercase;
+.team-card:hover { transform: translateY(-6px); border-color: rgba(0,212,170,0.2); }
+.team-card:hover::before { transform: scaleX(1); }
+.team-avatar {
+  width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--teal-dark), var(--blue-accent));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 1.3rem; font-weight: 800; color: var(--navy);
+  border: 3px solid rgba(0,212,170,0.2);
+  overflow: hidden; position: relative;
+}
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.team-name { font-family: var(--display); font-size: 0.92rem; font-weight: 700; margin-bottom: 4px; }
+.team-role { font-family: var(--mono); font-size: 0.6rem; color: var(--teal); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 14px; }
+.team-connect {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(0,212,170,0.06); border: 1px solid rgba(0,212,170,0.15);
+  padding: 6px 16px; border-radius: 50px;
+  font-family: var(--mono); font-size: 0.6rem; color: var(--teal);
+  transition: all 0.3s;
+}
+.team-connect:hover { background: var(--teal); color: var(--navy); }
+
+/* Mentor cards - slightly different */
+.mentor-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-top: 40px; }
+.mentor-card {
+  background: rgba(7,20,40,0.5); border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.05);
+  padding: 20px 14px; text-align: center;
+  transition: all 0.3s;
+}
+.mentor-card:hover { border-color: rgba(0,212,170,0.2); transform: translateY(-4px); }
+.mentor-avatar {
+  width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 12px;
+  background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(10,127,255,0.1));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--display); font-size: 1rem; font-weight: 800; color: var(--teal);
+  border: 2px solid rgba(0,212,170,0.15);
+  overflow: hidden; position: relative;
+}
+.mentor-avatar img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.mentor-name { font-family: var(--display); font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; }
+.mentor-role { font-family: var(--mono); font-size: 0.58rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+
+/* ==================== COUNTER ==================== */
+.counter-band {
+  background: linear-gradient(135deg, rgba(0,212,170,0.06), rgba(10,127,255,0.04));
+  border-top: 1px solid rgba(0,212,170,0.08);
+  border-bottom: 1px solid rgba(0,212,170,0.08);
+  padding: 60px 5%; text-align: center;
+  position: relative; z-index: 5;
+}
+.counter-grid { display: flex; justify-content: center; gap: 80px; flex-wrap: wrap; }
+.counter-item { text-align: center; }
+.counter-num {
+  font-family: var(--display); font-size: 3.5rem; font-weight: 800;
+  color: var(--teal); line-height: 1;
+  display: block;
+}
+.counter-label {
+  font-family: var(--mono); font-size: 0.65rem; letter-spacing: 3px;
+  color: var(--muted); text-transform: uppercase; margin-top: 8px;
 }
 
+/* ==================== CONTACT FORM ==================== */
+.contact-wrap {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+}
+.contact-info { display: flex; flex-direction: column; gap: 24px; }
+.contact-title { font-family: var(--display); font-size: 2.4rem; font-weight: 800; line-height: 1.2; }
+.contact-desc { color: var(--muted); line-height: 1.8; }
+.contact-items { display: flex; flex-direction: column; gap: 16px; }
+.contact-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px;
+  background: rgba(7,20,40,0.6);
+  border: 1px solid rgba(255,255,255,0.06); border-radius: 10px;
+}
+.contact-item-icon { font-size: 1.2rem; }
+.contact-item-label { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.contact-item-val { font-size: 0.85rem; color: var(--white); font-weight: 500; }
+
+.form-card {
+  background: var(--navy-card);
+  border: 1px solid rgba(0,212,170,0.1);
+  border-radius: var(--radius); padding: 40px;
+  backdrop-filter: blur(20px);
+}
+.form-title { font-family: var(--display); font-size: 1.5rem; font-weight: 800; margin-bottom: 28px; }
+.form-group { margin-bottom: 20px; }
+.form-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; display: block; margin-bottom: 8px; }
+.form-input, .form-textarea {
+  width: 100%; background: rgba(2,12,27,0.8);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px; padding: 14px 16px;
+  color: var(--white); font-family: var(--sans); font-size: 0.9rem;
+  outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-input:focus, .form-textarea:focus {
+  border-color: rgba(0,212,170,0.4);
+  box-shadow: 0 0 0 3px rgba(0,212,170,0.08);
+}
+.form-textarea { height: 140px; resize: none; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.submit-btn {
+  width: 100%; background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: var(--navy); border: none; border-radius: 8px;
+  padding: 16px; font-family: var(--display); font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,212,170,0.3); }
+.submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ==================== FOOTER ==================== */
+footer {
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding: 40px 5%;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
+  position: relative; z-index: 5;
+}
+.footer-brand { font-family: var(--display); font-weight: 700; font-size: 0.95rem; }
+.footer-brand span { color: var(--teal); }
+.footer-copy { font-size: 0.78rem; color: var(--muted); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 0.78rem; color: var(--muted); transition: color 0.3s; }
+.footer-links a:hover { color: var(--teal); }
+
+/* ==================== MOBILE NAV ==================== */
+.mobile-menu {
+  position: fixed; inset: 0; z-index: 999; background: rgba(2,12,27,0.97);
+  backdrop-filter: blur(30px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 36px;
+  transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a { font-family: var(--display); font-size: 2rem; font-weight: 700; color: var(--white); }
+.mobile-menu a:hover { color: var(--teal); }
+.mobile-close {
+  position: absolute; top: 28px; right: 5%;
+  background: none; border: none; cursor: pointer;
+  font-size: 1.5rem; color: var(--white);
+}
+
+/* ==================== MISC ==================== */
+.gsap-hidden { opacity: 0; transform: translateY(40px); }
+.section-divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,170,0.15), transparent);
+  margin: 0;
+}
+.teal { color: var(--teal); }
+.highlight-box {
+  background: linear-gradient(135deg, rgba(0,212,170,0.06), rgba(10,127,255,0.04));
+  border: 1px solid rgba(0,212,170,0.12); border-radius: var(--radius);
+  padding: 28px; margin-top: 24px;
+}
+.highlight-box p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; }
+.highlight-box strong { color: var(--white); }
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .hero-right { max-width: 560px; }
+  .how-grid { grid-template-columns: repeat(2, 1fr); }
+  .how-card .how-connector { display: none; }
+  .mentor-grid { grid-template-columns: repeat(3, 1fr); }
+}
 @media (max-width: 768px) {
-  nav { padding: 10px 5%; }
-  .nav-logo { height: 50px; }
-  .nav-links { display: none; }
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-stats { gap: 20px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: 1fr; }
+  .awards-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .mentor-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-wrap { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .counter-grid { gap: 40px; }
+  footer { flex-direction: column; text-align: center; }
 }
-.reveal { opacity: 0; transform: translateY(40px); }
 </style>
 </head>
-
 <body>
 
-<canvas id="plexus-canvas"></canvas>
+<!-- Background Canvas -->
+<canvas id="bg-canvas"></canvas>
 
-<!-- PRELOADER -->
-<div id="preloader">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" class="pencil">
-        <defs><clipPath id="pencil-eraser"><rect height="30" width="30" ry="5" rx="5"></rect></clipPath></defs>
-        <circle transform="rotate(-113,100,100)" stroke-linecap="round" stroke-dashoffset="439.82" stroke-dasharray="439.82 439.82" stroke-width="2" stroke="currentColor" fill="none" r="70" class="pencil__stroke"></circle>
-        <g transform="translate(100,100)" class="pencil__rotate">
-            <g fill="none">
-                <circle transform="rotate(-90)" stroke-dashoffset="402" stroke-dasharray="402.12 402.12" stroke-width="30" stroke="hsl(223,90%,50%)" r="64" class="pencil__body1"></circle>
-                <circle transform="rotate(-90)" stroke-dashoffset="465" stroke-dasharray="464.96 464.96" stroke-width="10" stroke="hsl(223,90%,60%)" r="74" class="pencil__body2"></circle>
-                <circle transform="rotate(-90)" stroke-dashoffset="339" stroke-dasharray="339.29 339.29" stroke-width="10" stroke="hsl(223,90%,40%)" r="54" class="pencil__body3"></circle>
-            </g>
-            <g transform="rotate(-90) translate(49,0)" class="pencil__eraser">
-                <g class="pencil__eraser-skew">
-                    <rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)"></rect>
-                    <rect clip-path="url(#pencil-eraser)" height="30" width="5" fill="hsl(223,90%,60%)"></rect>
-                    <rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
-                    <rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
-                    <rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
-                    <rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
-                    <rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
-                </g>
-            </g>
-            <g transform="rotate(-90) translate(49,-30)" class="pencil__point">
-                <polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)"></polygon>
-                <polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)"></polygon>
-                <polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)"></polygon>
-            </g>
-        </g>
-    </svg>
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
+  <a href="#hero" onclick="closeMobileMenu()">Home</a>
+  <a href="#problem" onclick="closeMobileMenu()">Problem</a>
+  <a href="#technology" onclick="closeMobileMenu()">Technology</a>
+  <a href="#team" onclick="closeMobileMenu()">Team</a>
+  <a href="#awards" onclick="closeMobileMenu()">Awards</a>
+  <a href="#contact" onclick="closeMobileMenu()">Contact</a>
 </div>
 
-<nav>
-  <img src="mit-corer.png" alt="Logo" class="nav-logo">
+<!-- Preloader -->
+<div id="preloader">
+  <div class="loader-wrap">
+    <div class="loader-ring"></div>
+    <div class="loader-inner"></div>
+  </div>
+  <div class="loader-brand">CleanSense AutoSan</div>
+  <div class="loader-text">Initializing System...</div>
+</div>
+
+<!-- ==================== NAV ==================== -->
+<nav id="navbar">
+  <img src="CleanSense Logo.png" alt="CleanSense AutoSan" class="nav-logo" onerror="this.style.display='none';document.querySelector('.nav-fallback').style.display='block'">
+  <span class="nav-fallback" style="display:none;font-family:var(--display);font-weight:800;font-size:1rem;color:var(--teal);">CleanSense</span>
   <ul class="nav-links">
     <li><a href="#hero">Home</a></li>
-    <li><a href="#tech">Technology</a></li>
-    <li><a href="#innovators">Innovators</a></li>
-    <li><a href="#gallery">Awards</a></li>
-    <li><a href="#contact">Connect</a></li>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#contact" class="nav-cta">Connect</a></li>
   </ul>
+  <button class="hamburger" onclick="openMobileMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
-<!-- HERO -->
+<!-- ==================== HERO ==================== -->
 <section class="hero" id="hero">
   <video autoplay muted loop playsinline class="hero-video">
     <source src="https://assets.mixkit.co/videos/preview/mixkit-technological-circuit-board-animation-4453-large.mp4" type="video/mp4">
   </video>
-  <div class="hero-content">
-    <img src="CleanSense Logo.png" alt="Company Logo" class="hero-page-logo reveal">
-    <h1 class="reveal">CleanSense AutoSan</h1>
-    <p class="reveal">Next-Gen Smart Sanitation Architecture. Powered by real-time sensing logic and IoT alerts.</p>
-  </div>
-</section>
+  <div class="hero-overlay"></div>
 
-<!-- TECH -->
-<section class="section" id="tech">
-  <span class="label-tech reveal">SYSTEM_BLUEPRINTS</span>
-  <h2 class="section-title reveal">The Hardware Architecture</h2>
-  <div class="grid-container">
-    <div class="grid-card reveal">
-        <h3>Odour Sensing</h3>
-        <p>MQ-series precision sensors detect foul gases in real-time within public toilet environments.</p>
-    </div>
-    <div class="grid-card reveal">
-        <h3>IoT Alerts</h3>
-        <p>Instant SMS messaging to authorities for maintenance, water levels, or system errors.</p>
-    </div>
-    <div class="grid-card reveal">
-        <h3>Pneumatics</h3>
-        <p>Integrated microcontroller triggers disinfectant pumps and high-velocity ventilation fans.</p>
-    </div>
-  </div>
-</section>
-
-<!-- INNOVATORS -->
-<section class="section" id="innovators">
-  <span class="label-tech reveal">CORE_ARCHITECTURE</span>
-  <h2 class="section-title reveal">The Innovators & Team</h2>
-  <div class="team-grid">
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('shreyas_pic.jpg');"></div>
-        <div class="card-info"><span>Shreyas Raja Elandassery</span><p>CHIEF EXECUTIVE OFFICER</p></div>
-        <a href="https://www.instagram.com/its_jeery_97" target="_blank" class="connect-btn">CONNECT</a>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('dhananjay_pic.jpg');"></div>
-        <div class="card-info"><span>Dhananjay Dattu Misal</span><p>CHIEF OPERATING OFFICER</p></div>
-        <a href="https://www.instagram.com/dhananjay_misal_96_k/" target="_blank" class="connect-btn">CONNECT</a>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('thejas_pic.jpg');"></div>
-        <div class="card-info"><span>Sanika Vinayak Pathak</span><p>TEAM LEAD CTO</p></div>
-        <a href="#" class="connect-btn">CONNECT</a>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('aryan_pic.jpg');"></div>
-        <div class="card-info"><span>Ritesh Shriniwas Sadul</span><p>TEAM MEMBER</p></div>
-        <a href="#" class="connect-btn">CONNECT</a>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('samrat_pic.jpg');"></div>
-        <div class="card-info"><span>Nishu Bhaskarrao Waghade.</span><p>TEAM MEMBER</p></div>
-        <a href="#" class="connect-btn">CONNECT</a>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Farid Shaikh</span><p>TEAM MEMBER</p></div>
-        <a href="#" class="connect-btn">CONNECT</a>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Thejas Elandassery </span><p>TEAM MEMBER</p></div>
-        <a href="#" class="connect-btn">CONNECT</a>
-    </div>
-  </div>
-</section>
-
-<!-- GUIDED BY -->
-<section class="section" id="guided-by">
-  <span class="label-tech reveal">GUIDANCE & MENTORSHIP</span>
-  <h2 class="section-title reveal">Guided By</h2>
-  <div class="team-grid">
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Dr. Pravin Madane</span><p>.</p></div>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Prof.Vaibhav Mali</span><p>.</p></div>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Prof.Sanjay Mane</span><p>.</p></div>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Prof.Pradip jagdale</span><p>Mentor</p></div>
-    </div>
-    <div class="card reveal card-anim-target">
-        <div class="image" style="background-image: url('');"></div>
-        <div class="card-info"><span>Mr. Raja Sidharthan</span><p>Mentor</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- GALLERY / AWARDS SECTION (Requested) -->
-<section class="section" id="gallery">
-    <span class="label-tech reveal">MILESTONES & RECOGNITION</span>
-    <h2 class="section-title reveal">Our Gallery & Awards</h2>
-    <div class="gallery-grid">
-        <!-- Card 1 -->
-        <div class="award-card reveal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
-            <div class="award-card__content">
-              <p class="award-card__title">STEMPreneur 2025</p>
-              <p class="award-card__description">Honored as the First Runner Up in the National Kre8tivity League for smart social impact innovation.</p>
-            </div>
+  <div class="hero-inner">
+    <!-- Left Column -->
+    <div class="hero-left">
+      <div class="hero-badge gsap-hidden">
+        <div class="badge-dot"></div>
+        IoT · Railway Sanitation · Smart Automation
+      </div>
+      <h1 class="hero-title">
+        <span class="line gsap-hidden">Cleaner Trains.</span>
+        <span class="line gsap-hidden">Smarter <span class="accent">Sanitation.</span></span>
+      </h1>
+      <p class="hero-desc gsap-hidden">
+        CleanSense AutoSan is an IoT-powered real-time sanitation monitoring system designed to transform hygiene management inside railway coaches — from reactive cleaning to intelligent, automated care.
+      </p>
+      <div class="hero-actions gsap-hidden">
+        <a href="#technology" class="btn-primary">Explore Technology →</a>
+        <a href="#contact" class="btn-outline">Get in Touch</a>
+      </div>
+      <div class="hero-stats gsap-hidden">
+        <div class="stat-item">
+          <div class="stat-num" data-target="4">0</div>
+          <div class="stat-label">Toilets / Coach</div>
         </div>
-        <!-- Card 2 -->
-        <div class="award-card reveal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
-            <div class="award-card__content">
-              <p class="award-card__title">Prototype Success</p>
-              <p class="award-card__description">Successfully developed and tested the first iteration of the AutoSan system at MITCORER Barshi.</p>
-            </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="2">0</div>
+          <div class="stat-label">ESP32 Nodes</div>
         </div>
-        <!-- Card 3 -->
-        <div class="award-card reveal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 5H4V19L13.2923 9.70649C13.6828 9.31595 14.3159 9.31591 14.7065 9.70641L20 15.0104V5ZM2 3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.0066V3.9934ZM8 11C6.89543 11 6 10.1046 6 9C6 7.89543 6.89543 7 8 7C9.10457 7 10 7.89543 10 9C10 10.1046 9.10457 11 8 11Z"></path></svg>
-            <div class="award-card__content">
-              <p class="award-card__title">Excellence Award</p>
-              <p class="award-card__description">Recognized by MITCORER Barshi for outstanding commitment to engineering and public health.</p>
-            </div>
+        <div class="stat-item">
+          <div class="stat-num" data-target="100">0</div>
+          <div class="stat-label">% Real-time</div>
         </div>
+      </div>
     </div>
+
+    <!-- Right Column — Live Dashboard Glass Card -->
+    <div class="hero-right gsap-hidden">
+      <div class="glass-card">
+        <div class="card-header">
+          <span class="card-label">Live Coach Dashboard</span>
+          <div class="status-badge"><div class="dot"></div> System Active</div>
+        </div>
+        <div class="toilet-grid">
+          <div class="toilet-item">
+            <div class="toilet-id">Toilet · T01</div>
+            <div class="toilet-meters">
+              <div class="meter-wrap">
+                <div class="meter-label">Odour</div>
+                <div class="meter-bar"><div class="meter-fill fill-teal" style="width:24%"></div></div>
+                <div class="meter-val">24 ppm</div>
+              </div>
+              <div class="meter-wrap">
+                <div class="meter-label">Water</div>
+                <div class="meter-bar"><div class="meter-fill fill-blue" style="width:78%"></div></div>
+                <div class="meter-val">78%</div>
+              </div>
+            </div>
+          </div>
+          <div class="toilet-item">
+            <div class="toilet-id">Toilet · T02</div>
+            <div class="toilet-meters">
+              <div class="meter-wrap">
+                <div class="meter-label">Odour</div>
+                <div class="meter-bar"><div class="meter-fill fill-red" style="width:87%"></div></div>
+                <div class="meter-val">87 ppm ⚠</div>
+              </div>
+              <div class="meter-wrap">
+                <div class="meter-label">Water</div>
+                <div class="meter-bar"><div class="meter-fill fill-blue" style="width:55%"></div></div>
+                <div class="meter-val">55%</div>
+              </div>
+            </div>
+          </div>
+          <div class="toilet-item">
+            <div class="toilet-id">Toilet · T03</div>
+            <div class="toilet-meters">
+              <div class="meter-wrap">
+                <div class="meter-label">Odour</div>
+                <div class="meter-bar"><div class="meter-fill fill-teal" style="width:31%"></div></div>
+                <div class="meter-val">31 ppm</div>
+              </div>
+              <div class="meter-wrap">
+                <div class="meter-label">Water</div>
+                <div class="meter-bar"><div class="meter-fill fill-red" style="width:12%"></div></div>
+                <div class="meter-val">12% ⚠</div>
+              </div>
+            </div>
+          </div>
+          <div class="toilet-item">
+            <div class="toilet-id">Toilet · T04</div>
+            <div class="toilet-meters">
+              <div class="meter-wrap">
+                <div class="meter-label">Odour</div>
+                <div class="meter-bar"><div class="meter-fill fill-teal" style="width:18%"></div></div>
+                <div class="meter-val">18 ppm</div>
+              </div>
+              <div class="meter-wrap">
+                <div class="meter-label">Water</div>
+                <div class="meter-bar"><div class="meter-fill fill-blue" style="width:91%"></div></div>
+                <div class="meter-val">91%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="card-header">
+          <span class="card-label">System Sensors</span>
+          <span style="font-family:var(--mono);font-size:0.6rem;color:var(--muted);">LIVE</span>
+        </div>
+        <div class="sensor-row">
+          <span class="sensor-name">MQ Gas Sensor (T02)</span>
+          <span class="sensor-val sensor-alert">HIGH — Fan Active</span>
+        </div>
+        <div class="sensor-row">
+          <span class="sensor-name">Ultrasonic Level (T03)</span>
+          <span class="sensor-val sensor-alert">LOW — SMS Sent</span>
+        </div>
+        <div class="sensor-row">
+          <span class="sensor-name">Exhaust Fan (T02)</span>
+          <span class="sensor-val">Running 1840 rpm</span>
+        </div>
+        <div class="sensor-row">
+          <span class="sensor-name">Spray Valve (T02)</span>
+          <span class="sensor-val">Activated</span>
+        </div>
+        <div class="sensor-row">
+          <span class="sensor-name">WiFi Link (Slave→Master)</span>
+          <span class="sensor-val">Connected</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- VISITOR COUNTER -->
+<!-- ==================== MARQUEE ==================== -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <div class="marquee-item"><span>◆</span> ESP32 IoT Network</div>
+    <div class="marquee-item"><span>◆</span> MQ Gas Sensors</div>
+    <div class="marquee-item"><span>◆</span> Ultrasonic Water Level</div>
+    <div class="marquee-item"><span>◆</span> Real-Time Dashboard</div>
+    <div class="marquee-item"><span>◆</span> SMS Alert System</div>
+    <div class="marquee-item"><span>◆</span> Auto Ventilation</div>
+    <div class="marquee-item"><span>◆</span> Solenoid Valve Control</div>
+    <div class="marquee-item"><span>◆</span> DFPlayer Voice Alerts</div>
+    <div class="marquee-item"><span>◆</span> STEMPreneur 2025 Winner</div>
+    <div class="marquee-item"><span>◆</span> MITCORER Barshi</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="marquee-item"><span>◆</span> ESP32 IoT Network</div>
+    <div class="marquee-item"><span>◆</span> MQ Gas Sensors</div>
+    <div class="marquee-item"><span>◆</span> Ultrasonic Water Level</div>
+    <div class="marquee-item"><span>◆</span> Real-Time Dashboard</div>
+    <div class="marquee-item"><span>◆</span> SMS Alert System</div>
+    <div class="marquee-item"><span>◆</span> Auto Ventilation</div>
+    <div class="marquee-item"><span>◆</span> Solenoid Valve Control</div>
+    <div class="marquee-item"><span>◆</span> DFPlayer Voice Alerts</div>
+    <div class="marquee-item"><span>◆</span> STEMPreneur 2025 Winner</div>
+    <div class="marquee-item"><span>◆</span> MITCORER Barshi</div>
+  </div>
+</div>
+
+<!-- ==================== PROBLEM ==================== -->
+<div class="section-divider"></div>
+<section class="section" id="problem">
+  <div class="section-head gsap-hidden">
+    <span class="tag">THE PROBLEM</span>
+    <h2 class="section-title">Railway Sanitation is <br><span class="teal">Broken Today</span></h2>
+    <p class="section-sub">India's railways carry over 23 million passengers daily. Yet toilet monitoring remains entirely manual — reactive, inconsistent, and often too late.</p>
+  </div>
+  <div class="problem-grid">
+    <div class="problem-visual gsap-hidden">
+      <div class="problem-stat">
+        <div class="problem-num">23M+</div>
+        <div class="problem-desc">Passengers travel daily on Indian Railways — many suffering poor sanitation with no real-time solution in place.</div>
+      </div>
+      <div class="problem-stat">
+        <div class="problem-num" style="color:var(--blue-accent)">0</div>
+        <div class="problem-desc">Automated real-time odour detection systems exist in standard railway coaches today.</div>
+      </div>
+      <div class="highlight-box">
+        <p><strong>The core issue:</strong> Current cleaning is reactive — staff only respond after passengers complain. Our solution shifts this to <strong>proactive, sensor-driven maintenance</strong> — cleaning before passengers ever notice a problem.</p>
+      </div>
+    </div>
+    <div class="problem-list">
+      <div class="problem-item gsap-hidden">
+        <div class="problem-icon icon-red">💨</div>
+        <div>
+          <div class="problem-item-title">Undetected Foul Odour</div>
+          <div class="problem-item-text">Bad odors develop inside train toilets and go undetected for hours, causing extreme discomfort for passengers — especially in premium coaches where expectations are high.</div>
+        </div>
+      </div>
+      <div class="problem-item gsap-hidden">
+        <div class="problem-icon icon-orange">💧</div>
+        <div>
+          <div class="problem-item-title">Empty Water Tanks</div>
+          <div class="problem-item-text">Water tanks frequently run dry with no alert mechanism, leaving toilets non-functional for long stretches of the journey before staff are even notified.</div>
+        </div>
+      </div>
+      <div class="problem-item gsap-hidden">
+        <div class="problem-icon icon-yellow">📋</div>
+        <div>
+          <div class="problem-item-title">No Visibility for Staff</div>
+          <div class="problem-item-text">Cleaning teams have no centralized view of toilet conditions across coaches. Without real-time data, prioritization is impossible and maintenance is inefficient.</div>
+        </div>
+      </div>
+      <div class="problem-item gsap-hidden">
+        <div class="problem-icon icon-red">🌍</div>
+        <div>
+          <div class="problem-item-title">Impact on Tourism</div>
+          <div class="problem-item-text">For international travelers, hygiene standards are a critical deciding factor. Poor sanitation in coaches harms India's image as a destination and affects railway revenue.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== HOW IT WORKS ==================== -->
+<div class="section-divider"></div>
+<section class="section" id="how-it-works">
+  <div class="section-head gsap-hidden">
+    <span class="tag">HOW IT WORKS</span>
+    <h2 class="section-title">Four Steps to <span class="teal">Smart Sanitation</span></h2>
+    <p class="section-sub">A hybrid event-driven and threshold-based control system that detects, responds, and reports — all automatically.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-card gsap-hidden">
+      <div class="how-connector"></div>
+      <div class="how-icon">🔍</div>
+      <div class="how-title">Sense</div>
+      <div class="how-text">MQ-series gas sensors continuously measure odour levels. Ultrasonic sensors monitor water tank depth in real-time inside each toilet compartment.</div>
+    </div>
+    <div class="how-card gsap-hidden">
+      <div class="how-connector"></div>
+      <div class="how-icon">⚡</div>
+      <div class="how-title">Respond</div>
+      <div class="how-text">When odour crosses the threshold, ESP32 automatically activates exhaust fans and triggers the solenoid valve for a spray-and-flush cycle on the floor.</div>
+    </div>
+    <div class="how-card gsap-hidden">
+      <div class="how-connector"></div>
+      <div class="how-icon">📡</div>
+      <div class="how-title">Alert</div>
+      <div class="how-text">The master ESP32 sends SMS alerts to maintenance staff when water levels are critically low or odour remains high after the automated cleaning cycle.</div>
+    </div>
+    <div class="how-card gsap-hidden">
+      <div class="how-icon">📊</div>
+      <div class="how-title">Monitor</div>
+      <div class="how-text">All four toilets per coach are displayed on a real-time web dashboard — odour ppm, water %, fan/valve status, LED indicators, and voice alerts via DFPlayer.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TECHNOLOGY ==================== -->
+<div class="section-divider"></div>
+<section class="section" id="technology">
+  <div class="section-head gsap-hidden">
+    <span class="tag">THE TECHNOLOGY</span>
+    <h2 class="section-title">Built on <span class="teal">Proven IoT Hardware</span></h2>
+    <p class="section-sub">Every component is chosen for reliability, affordability, and scalability across India's vast railway network.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">🧠</div>
+      <div class="feature-title">Dual ESP32 Architecture</div>
+      <div class="feature-text">A master ESP32 manages the web dashboard, cleaning triggers, and SMS alerts. A slave ESP32 monitors additional toilets and streams data over WiFi — scalable to any coach length.</div>
+      <div class="feature-chips">
+        <span class="chip">ESP32 Master</span>
+        <span class="chip">ESP32 Slave</span>
+        <span class="chip">WiFi Mesh</span>
+      </div>
+    </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">👃</div>
+      <div class="feature-title">Odour Detection System</div>
+      <div class="feature-text">MQ-series gas sensors precisely detect hydrogen sulfide, ammonia, and other foul-smelling gases at parts-per-million accuracy. Threshold-based triggering ensures no false alarms.</div>
+      <div class="feature-chips">
+        <span class="chip">MQ Sensors</span>
+        <span class="chip">PPM Threshold</span>
+        <span class="chip">Event-Driven</span>
+      </div>
+    </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">💧</div>
+      <div class="feature-title">Water Level Monitoring</div>
+      <div class="feature-text">Ultrasonic distance sensors mounted inside water tanks measure depth continuously. When levels drop below a safe threshold, the system generates an alert before the tank runs dry.</div>
+      <div class="feature-chips">
+        <span class="chip">Ultrasonic HC-SR04</span>
+        <span class="chip">Real-time %</span>
+        <span class="chip">Low-Level Alert</span>
+      </div>
+    </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">💨</div>
+      <div class="feature-title">Automated Ventilation & Spray</div>
+      <div class="feature-text">When odour is detected, the microcontroller triggers exhaust fans to ventilate and opens a solenoid valve connected to a floor sprinkler — cleaning without human intervention.</div>
+      <div class="feature-chips">
+        <span class="chip">Exhaust Fan</span>
+        <span class="chip">Solenoid Valve</span>
+        <span class="chip">Floor Sprinkler</span>
+      </div>
+    </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">📲</div>
+      <div class="feature-title">SMS Alert System</div>
+      <div class="feature-text">Instant SMS notifications are dispatched to railway maintenance personnel when critical conditions are detected — water shortage, persistent odour, or system faults — ensuring rapid human response.</div>
+      <div class="feature-chips">
+        <span class="chip">SMS Gateway</span>
+        <span class="chip">Multi-recipient</span>
+        <span class="chip">Instant Dispatch</span>
+      </div>
+    </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Real-Time Web Dashboard</div>
+      <div class="feature-text">Railway staff can monitor all four toilets per coach from any device — odour levels, water percentage, fan and valve status, LED indicators, and voice alerts via the DFPlayer audio module.</div>
+      <div class="feature-chips">
+        <span class="chip">Web Dashboard</span>
+        <span class="chip">LED Indicators</span>
+        <span class="chip">DFPlayer Audio</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BUSINESS MODEL ==================== -->
+<div class="section-divider"></div>
 <section class="section">
-    <div class="counter-section reveal">
-        <div class="counter-box" id="visitor-count">0</div>
-        <p style="color: var(--text-muted); font-family:monospace; letter-spacing:2px;">GLOBAL VISITORS</p>
+  <div class="section-head gsap-hidden">
+    <span class="tag">STARTUP STRATEGY</span>
+    <h2 class="section-title">Scalable from <span class="teal">Premium to Network</span></h2>
+    <p class="section-sub">We deploy first in Vande Bharat, Tejas Express, and AC coaches — proving value where expectations are highest, then scaling to the entire fleet.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">🚆</div>
+      <div class="feature-title">Phase 1 — Premium Coaches</div>
+      <div class="feature-text">Target Vande Bharat, Tejas Express, and AC coach segments where hygiene standards are critical and maintenance budgets exist. Build proof of concept and gather performance data.</div>
     </div>
-</section>
-
-<!-- CONNECT FORM -->
-<section class="feedback-section" id="contact">
-  <div class="form-container reveal">
-    <div class="form">
-        <span class="heading">Connect with us</span>
-        <input placeholder="Your Name" type="text" id="uname" class="input" required>
-        <input placeholder="Your Email" type="email" id="uemail" class="input" required>
-        <textarea placeholder="Your Message..." id="umsg" class="textarea" required></textarea>
-        <div class="button-container">
-            <button class="send-button" id="submitBtn">Send</button>
-        </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">🌐</div>
+      <div class="feature-title">Phase 2 — Network Rollout</div>
+      <div class="feature-text">Modular hardware design allows one master node per coach, connected to a central cloud platform. Railway authorities get fleet-wide sanitation monitoring across entire routes.</div>
+    </div>
+    <div class="feature-card gsap-hidden">
+      <div class="feature-icon">🏗️</div>
+      <div class="feature-title">Phase 3 — Beyond Railways</div>
+      <div class="feature-text">The same platform adapts to metro trains, airports, bus stations, and public sanitation facilities — opening a significantly larger addressable market for CleanSense AutoSan.</div>
     </div>
   </div>
 </section>
 
-<footer style="text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.8rem; border-top: 1px solid #111;">
-  © 2026 CleanSense AutoSan ! MITCORER Barshi.
+<!-- ==================== AWARDS ==================== -->
+<div class="section-divider"></div>
+<section class="section" id="awards">
+  <div class="section-head gsap-hidden">
+    <span class="tag">MILESTONES & RECOGNITION</span>
+    <h2 class="section-title">Achievements &amp; <span class="teal">Awards</span></h2>
+    <p class="section-sub">Recognized nationally for innovation in smart sanitation, social impact engineering, and IoT-driven public health solutions.</p>
+  </div>
+  <div class="awards-grid">
+    <div class="award-card gsap-hidden">
+      <div class="award-front">
+        <div class="award-icon">🏆</div>
+        <div class="award-title">STEMPreneur 2025</div>
+        <div class="award-sub">National Kre8tivity League · First Runner Up</div>
+      </div>
+      <div class="award-back">
+        <div class="award-back-title">STEMPreneur 2025</div>
+        <div class="award-back-desc">Honored as First Runner Up in the National Kre8tivity League for innovation in smart social impact technology. Competing against teams from across India, CleanSense AutoSan stood out for its real-world applicability.</div>
+      </div>
+    </div>
+    <div class="award-card gsap-hidden">
+      <div class="award-front">
+        <div class="award-icon">🔬</div>
+        <div class="award-title">Prototype Milestone</div>
+        <div class="award-sub">MITCORER Barshi · Working System Demo</div>
+      </div>
+      <div class="award-back">
+        <div class="award-back-title">Working Prototype</div>
+        <div class="award-back-desc">Successfully developed and tested the first complete iteration of the AutoSan system at MITCORER Barshi — dual ESP32 nodes, sensor array, dashboard, and automated cleaning mechanisms all functional.</div>
+      </div>
+    </div>
+    <div class="award-card gsap-hidden">
+      <div class="award-front">
+        <div class="award-icon">🌟</div>
+        <div class="award-title">Excellence Award</div>
+        <div class="award-sub">MITCORER Barshi · Engineering & Public Health</div>
+      </div>
+      <div class="award-back">
+        <div class="award-back-title">Excellence Award</div>
+        <div class="award-back-desc">Recognized by MITCORER Barshi for outstanding commitment to engineering excellence and its direct contribution to improving public health infrastructure through intelligent automation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TEAM ==================== -->
+<div class="section-divider"></div>
+<section class="section" id="team">
+  <div class="section-head gsap-hidden">
+    <span class="tag">THE INNOVATORS</span>
+    <h2 class="section-title">Meet the <span class="teal">Team</span></h2>
+    <p class="section-sub">Engineers, innovators, and problem-solvers from MITCORER Barshi driving the future of smart railway sanitation.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">
+        <img src="shreyas_pic.jpg" alt="Shreyas" onerror="this.style.display='none'">
+        SR
+      </div>
+      <div class="team-name">Shreyas Raja Elandassery</div>
+      <div class="team-role">Chief Executive Officer</div>
+      <a href="https://www.instagram.com/its_jeery_97" target="_blank" class="team-connect">↗ Connect</a>
+    </div>
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">
+        <img src="dhananjay_pic.jpg" alt="Dhananjay" onerror="this.style.display='none'">
+        DM
+      </div>
+      <div class="team-name">Dhananjay Dattu Misal</div>
+      <div class="team-role">Chief Operating Officer</div>
+      <a href="https://www.instagram.com/dhananjay_misal_96_k/" target="_blank" class="team-connect">↗ Connect</a>
+    </div>
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">
+        <img src="thejas_pic.jpg" alt="Sanika" onerror="this.style.display='none'">
+        SP
+      </div>
+      <div class="team-name">Sanika Vinayak Pathak</div>
+      <div class="team-role">Team Lead · CTO</div>
+      <a href="#" class="team-connect">↗ Connect</a>
+    </div>
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">
+        <img src="aryan_pic.jpg" alt="Ritesh" onerror="this.style.display='none'">
+        RS
+      </div>
+      <div class="team-name">Ritesh Shriniwas Sadul</div>
+      <div class="team-role">Team Member</div>
+      <a href="#" class="team-connect">↗ Connect</a>
+    </div>
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">
+        <img src="samrat_pic.jpg" alt="Nishu" onerror="this.style.display='none'">
+        NW
+      </div>
+      <div class="team-name">Nishu Bhaskarrao Waghade</div>
+      <div class="team-role">Team Member</div>
+      <a href="#" class="team-connect">↗ Connect</a>
+    </div>
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">FS</div>
+      <div class="team-name">Farid Shaikh</div>
+      <div class="team-role">Team Member</div>
+      <a href="#" class="team-connect">↗ Connect</a>
+    </div>
+    <div class="team-card gsap-hidden">
+      <div class="team-avatar">TE</div>
+      <div class="team-name">Thejas Elandassery</div>
+      <div class="team-role">Team Member</div>
+      <a href="#" class="team-connect">↗ Connect</a>
+    </div>
+  </div>
+
+  <!-- Guided By -->
+  <div style="margin-top: 70px;">
+    <span class="tag gsap-hidden">GUIDANCE &amp; MENTORSHIP</span>
+    <h3 class="section-title gsap-hidden" style="font-size:2rem;">Guided <span class="teal">By</span></h3>
+    <div class="mentor-grid">
+      <div class="mentor-card gsap-hidden">
+        <div class="mentor-avatar">PM</div>
+        <div class="mentor-name">Dr. Pravin Madane</div>
+        <div class="mentor-role">Faculty Guide</div>
+      </div>
+      <div class="mentor-card gsap-hidden">
+        <div class="mentor-avatar">VM</div>
+        <div class="mentor-name">Prof. Vaibhav Mali</div>
+        <div class="mentor-role">Faculty Guide</div>
+      </div>
+      <div class="mentor-card gsap-hidden">
+        <div class="mentor-avatar">SM</div>
+        <div class="mentor-name">Prof. Sanjay Mane</div>
+        <div class="mentor-role">Faculty Guide</div>
+      </div>
+      <div class="mentor-card gsap-hidden">
+        <div class="mentor-avatar">PJ</div>
+        <div class="mentor-name">Prof. Pradip Jagdale</div>
+        <div class="mentor-role">Mentor</div>
+      </div>
+      <div class="mentor-card gsap-hidden">
+        <div class="mentor-avatar">RS</div>
+        <div class="mentor-name">Mr. Raja Sidharthan</div>
+        <div class="mentor-role">Industry Mentor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== COUNTER BAND ==================== -->
+<div class="counter-band">
+  <div class="counter-grid">
+    <div class="counter-item gsap-hidden">
+      <span class="counter-num" data-target="39" data-suffix="">0</span>
+      <span class="counter-label">GitHub Deployments</span>
+    </div>
+    <div class="counter-item gsap-hidden">
+      <span class="counter-num" data-target="4" data-suffix="">0</span>
+      <span class="counter-label">Toilets Monitored / Coach</span>
+    </div>
+    <div class="counter-item gsap-hidden">
+      <span class="counter-num" id="visitor-count" data-target="0" data-suffix="">0</span>
+      <span class="counter-label">Global Visitors</span>
+    </div>
+    <div class="counter-item gsap-hidden">
+      <span class="counter-num" data-target="3" data-suffix="">0</span>
+      <span class="counter-label">Awards & Recognition</span>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CONTACT ==================== -->
+<div class="section-divider"></div>
+<section class="section" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-info gsap-hidden">
+      <div>
+        <span class="tag">GET IN TOUCH</span>
+        <h2 class="contact-title">Let's Build <span class="teal">Cleaner Railways</span> Together</h2>
+      </div>
+      <p class="contact-desc">
+        Whether you're a railway authority, investor, research institution, or fellow innovator — we'd love to connect. CleanSense AutoSan is ready for pilot deployments in premium railway coaches.
+      </p>
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">🎓</div>
+          <div>
+            <div class="contact-item-label">Institution</div>
+            <div class="contact-item-val">MIT College of Railway Engineering</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🏆</div>
+          <div>
+            <div class="contact-item-label">Recognition</div>
+            <div class="contact-item-val">STEMPreneur 2025 — First Runner Up, National Kre8tivity League</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card gsap-hidden">
+      <div class="form-title">Send a Message</div>
+      <form id="contactForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input class="form-input" type="text" id="uname" placeholder="Full Name" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" type="email" id="uemail" placeholder="you@example.com" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" id="umsg" placeholder="Tell us about your interest or proposal..." required></textarea>
+        </div>
+
+        <!-- Hidden fields for script logic from second file -->
+        <input type="hidden" id="user_query">
+        <input type="hidden" id="ai_reply">
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+            <span id="btn-text">Send Message</span>
+            <span>→</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="footer-brand">Clean<span>Sense</span> AutoSan</div>
+  <div class="footer-links">
+    <a href="#hero">Home</a>
+    <a href="#technology">Technology</a>
+    <a href="#team">Team</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="footer-copy">© 2026 CleanSense AutoSan · MITCORER Barshi · Swach Rail Yatra</div>
 </footer>
 
+<!-- ==================== SCRIPTS ==================== -->
 <script>
-// PLEXUS BACKGROUND
-const canvas = document.getElementById('plexus-canvas');
+gsap.registerPlugin(ScrollTrigger);
+
+// ---- PARTICLE CANVAS ----
+const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
-let particles = [];
-function initPlexus() {
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    particles = [];
-    for(let i=0; i<80; i++) {
-        particles.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height, sx: Math.random()*0.8 - 0.4, sy: Math.random()*0.8 - 0.4 });
-    }
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
 }
-function drawPlexus() {
-    ctx.clearRect(0,0,canvas.width, canvas.height);
-    ctx.fillStyle = "#22c55e"; ctx.strokeStyle = "rgba(34, 197, 94, 0.15)";
-    for(let i=0; i<particles.length; i++) {
-        let p = particles[i]; p.x += p.sx; p.y += p.sy;
-        if(p.x<0 || p.x>canvas.width) p.sx*=-1; if(p.y<0 || p.y>canvas.height) p.sy*=-1;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
-        for(let j=i+1; j<particles.length; j++) {
-            let p2 = particles[j]; let dist = Math.hypot(p.x-p2.x, p.y-p2.y);
-            if(dist < 150) { ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); }
-        }
-    }
-    requestAnimationFrame(drawPlexus);
-}
-initPlexus(); drawPlexus();
+resize();
+window.addEventListener('resize', () => { resize(); initParticles(); });
 
-// 5-SECOND LOADER
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        anime({ targets: '#preloader', opacity: 0, duration: 800, easing: 'easeInOutQuad', complete: () => { document.getElementById('preloader').style.display = 'none'; startHero(); } });
-    }, 5000);
-});
-
-function startHero() {
-    anime({ targets: '.reveal', translateY: [40, 0], opacity: [0, 1], duration: 1500, easing: 'easeOutExpo', delay: anime.stagger(100) });
-}
-
-// VISITOR COUNTER
-let vCount = localStorage.getItem('v_count') || 1240;
-vCount = parseInt(vCount) + 1;
-localStorage.setItem('v_count', vCount);
-document.getElementById('visitor-count').innerText = vCount;
-
-// SCROLL REVEAL & MOBILE RE-TRIGGER
-const isMobile = window.innerWidth <= 768;
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            anime({ targets: entry.target, opacity: [0, 1], translateY: [40, 0], duration: 1200, easing: 'easeOutQuart' });
-            if(isMobile && entry.target.classList.contains('card-anim-target')) {
-                entry.target.classList.add('anim-active');
-            }
-        } else {
-            if(isMobile && entry.target.classList.contains('card-anim-target')) {
-                entry.target.classList.remove('anim-active');
-            }
-        }
+function initParticles() {
+  particles = [];
+  const count = Math.floor(W / 18);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.4 + 0.4,
+      sx: (Math.random() - 0.5) * 0.35,
+      sy: (Math.random() - 0.5) * 0.35,
+      op: Math.random() * 0.5 + 0.1
     });
-}, { threshold: 0.2 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }
+}
+initParticles();
 
-// CONTACT FORM
-document.getElementById('submitBtn').addEventListener('click', function(e) {
-    const btn = e.target;
-    const name = document.getElementById('uname').value;
-    const email = document.getElementById('uemail').value;
-    const msg = document.getElementById('umsg').value;
+let mouseX = W/2, mouseY = H/2;
+document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
 
-    if(!name || !email || !msg) { alert("Please fill all fields"); return; }
+function drawParticles() {
+  ctx.clearRect(0, 0, W, H);
+  // subtle radial glow around mouse
+  const grad = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 300);
+  grad.addColorStop(0, 'rgba(0,212,170,0.03)');
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, W, H);
 
-    btn.innerText = "Sending..."; btn.disabled = true;
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.x += p.sx; p.y += p.sy;
+    if (p.x < 0 || p.x > W) p.sx *= -1;
+    if (p.y < 0 || p.y > H) p.sy *= -1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(0, 212, 170, ${p.op})`;
+    ctx.fill();
+    for (let j = i + 1; j < particles.length; j++) {
+      const q = particles[j];
+      const d = Math.hypot(p.x - q.x, p.y - q.y);
+      if (d < 120) {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+        ctx.strokeStyle = `rgba(0,212,170,${0.06 * (1 - d/120)})`;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
 
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyWDEyAESBu-Lfqx9EJDscubRJ6AaQ5dsFBfP5dqyWfDsI87AdnCTANVjUoOIxlIILe/exec';
-    const formData = new FormData();
-    formData.append('Data', new Date().toLocaleString());
-    formData.append('Name', name);
-    formData.append('Email', email);
-    formData.append('Message', msg);
+// ---- VISITOR COUNTER ----
+let vc = parseInt(localStorage.getItem('cs_vc') || '1240');
+vc++;
+localStorage.setItem('cs_vc', vc);
+const vcEl = document.getElementById('visitor-count');
+if (vcEl) { vcEl.dataset.target = vc; }
 
-    fetch(scriptURL, { method: 'POST', body: formData })
-        .then(response => {
-            alert("Message sent successfully!");
-            btn.innerText = "Send"; btn.disabled = false;
-            document.getElementById('uname').value = ''; document.getElementById('uemail').value = ''; document.getElementById('umsg').value = '';
-        })
-        .catch(error => {
-            alert("Message sent successfully!");
-            btn.innerText = "Send"; btn.disabled = false;
-            document.getElementById('uname').value = ''; document.getElementById('uemail').value = ''; document.getElementById('umsg').value = '';
-        });
+// ---- PRELOADER ----
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    gsap.to('#preloader', {
+      opacity: 0, duration: 0.8, ease: 'power2.inOut',
+      onComplete: () => {
+        document.getElementById('preloader').style.display = 'none';
+        initHero();
+      }
+    });
+  }, 2200);
 });
-</script>
 
+function initHero() {
+  const tl = gsap.timeline();
+  tl.to('.hero-badge',   { opacity:1, y:0, duration:0.7, ease:'power3.out' })
+    .to('.hero-title .line', { opacity:1, y:0, duration:0.8, ease:'power3.out', stagger:0.15 }, '-=0.3')
+    .to('.hero-desc',    { opacity:1, y:0, duration:0.7, ease:'power3.out' }, '-=0.4')
+    .to('.hero-actions', { opacity:1, y:0, duration:0.6, ease:'power3.out' }, '-=0.3')
+    .to('.hero-stats',   { opacity:1, y:0, duration:0.6, ease:'power3.out' }, '-=0.2')
+    .to('.hero-right',   { opacity:1, y:0, duration:0.9, ease:'power3.out' }, '-=0.6');
+}
+
+// ---- SCROLL ANIMATIONS ----
+gsap.utils.toArray('.gsap-hidden').forEach(el => {
+  if (el.closest('.hero')) return; // handled by hero init
+  gsap.to(el, {
+    scrollTrigger: {
+      trigger: el, start: 'top 88%',
+      toggleActions: 'play none none none'
+    },
+    opacity: 1, y: 0, duration: 0.85, ease: 'power3.out'
+  });
+});
+
+// ---- COUNTER ANIMATION ----
+gsap.utils.toArray('.counter-num').forEach(el => {
+  const target = parseInt(el.dataset.target) || 0;
+  ScrollTrigger.create({
+    trigger: el, start: 'top 85%', once: true,
+    onEnter: () => {
+      let start = 0;
+      const duration = 1800;
+      const startTime = performance.now();
+      function update(now) {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(update);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(update);
+    }
+  });
+});
+
+// ---- NAV SCROLL ----
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ---- MOBILE MENU ----
+function openMobileMenu()  { document.getElementById('mobileMenu').classList.add('open'); }
+function closeMobileMenu() { document.getElementById('mobileMenu').classList.remove('open'); }
+
+// ---- CONTACT FORM (UPDATED TO MATCH SECOND FILE) ----
+document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submitBtn');
+    const name = document.getElementById("uname").value;
+    const email = document.getElementById("uemail").value;
+    const message = document.getElementById("umsg").value;
+
+    // Set hidden logic for AI reply and query based on second file
+    document.getElementById("user_query").value = message;
+    document.getElementById("ai_reply").value =
+        "Thank you " + name + " for contacting us. We received your query: '" 
+        + message + "'. Our team will reply to you soon.";
+
+    // URL from the second HTML file
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwjBfj1j-UcK-Sq6mSrBxCCV2KLJ47r23qGmQToEw7V3_rUGfRS8Apf6VNS8q75eL8mvw/exec";
+
+    document.getElementById('btn-text').textContent = 'Sending...';
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("message", message);
+    formData.append("user_query", document.getElementById("user_query").value);
+    formData.append("ai_reply", document.getElementById("ai_reply").value);
+
+    fetch(scriptURL, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        alert("Message sent successfully! You will receive an email reply soon.");
+        document.getElementById("contactForm").reset();
+    })
+    .catch(error => {
+        alert("Error sending message.");
+    })
+    .finally(() => {
+        document.getElementById('btn-text').textContent = 'Send Message';
+        btn.disabled = false;
+    });
+});
+
+// ---- LIVE DASHBOARD ANIMATION ----
+function animateDashboard() {
+  const fills = document.querySelectorAll('.meter-fill');
+  fills.forEach(f => {
+    const base = parseInt(f.style.width);
+    const jitter = (Math.random() - 0.5) * 6;
+    const newW = Math.max(5, Math.min(99, base + jitter));
+    f.style.width = newW + '%';
+    // Update val text
+    const valEl = f.closest('.meter-wrap').querySelector('.meter-val');
+    if (valEl) {
+      if (f.classList.contains('fill-teal') || f.classList.contains('fill-red')) {
+        const ppm = Math.round(newW * 1.2);
+        valEl.textContent = ppm > 70 ? ppm + ' ppm ⚠' : ppm + ' ppm';
+        valEl.style.color = ppm > 70 ? 'var(--danger)' : 'var(--white)';
+      } else {
+        valEl.textContent = Math.round(newW) + (newW < 20 ? '% ⚠' : '%');
+        valEl.style.color = newW < 20 ? 'var(--danger)' : 'var(--white)';
+      }
+    }
+  });
+}
+setInterval(animateDashboard, 3000);
+</script>
 </body>
 </html>
